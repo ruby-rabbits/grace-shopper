@@ -4,6 +4,7 @@ const {
 } = require("../db");
 module.exports = router;
 
+// GET /  ==> all products
 router.get("/", async (req, res, next) => {
   try {
     const products = await Product.findAll();
@@ -13,6 +14,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+// GET /:id == > single product with id
 router.get("/:id", async (req, res, next) => {
   try {
     const singleProduct = await Product.findOne({
@@ -26,6 +28,7 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
+// POST / == > create new product row
 router.post("/", async (req, res, next) => {
   try {
     const newProduct = await Product.create(req.body);
@@ -35,6 +38,7 @@ router.post("/", async (req, res, next) => {
   }
 });
 
+// PUT /:id ==> edit product with id
 router.put("/:id", async (req, res, next) => {
   try {
     const productToUpdate = await Product.findByPk(req.params.id);
@@ -45,6 +49,7 @@ router.put("/:id", async (req, res, next) => {
   }
 });
 
+// DELETE /:id ==> delete product with id
 router.delete("/:id", async (req, res, next) => {
   try {
     const productToDelete = await Product.findByPk(req.params.id);
