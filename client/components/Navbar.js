@@ -5,18 +5,21 @@ import {logout} from '../store'
 
 const Navbar = ({handleClick, isLoggedIn}) => (
   <div>
-    <h1>FS-App-Template</h1>
+    <h1>Welcome to Show Shopper!</h1>
     <nav>
       {isLoggedIn ? (
         <div>
           {/* The navbar will show these links after you log in */}
           <Link to="/home">Home</Link>
+          {/* this link would go to user account info once it exists */} 
+          <Link to="/home">My Account</Link>
           <a href="#" onClick={handleClick}>
             Logout
           </a>
         </div>
       ) : (
         <div>
+          {/* how to get these to the right?*/}
           {/* The navbar will show these links before you log in */}
           <Link to="/login">Login</Link>
           <Link to="/signup">Sign Up</Link>
