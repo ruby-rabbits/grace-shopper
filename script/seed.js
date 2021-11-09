@@ -1,9 +1,9 @@
-"use strict";
+'use strict';
 
 const {
   db,
-  models: { User, Product },
-} = require("../server/db");
+  models: { User, Product, Order },
+} = require('../server/db');
 
 /**
  * seed - this function clears the database, updates tables to
@@ -11,21 +11,40 @@ const {
  */
 async function seed() {
   await db.sync({ force: true }); // clears db and matches models to tables
-  console.log("db synced!");
+  console.log('db synced!');
 
   // Creating Users
   const users = await Promise.all([
-    User.create({ username: "cody", password: "123" }),
-    User.create({ username: "murphy", password: "123" }),
+    User.create({ username: 'cody', password: '123' }),
+    User.create({ username: 'murphy', password: '123' }),
   ]);
 
   const products = await Promise.all([
-    Product.create({ productName: "Codewars", price: 20.0 }),
-    Product.create({ productName: "Dune", category: "movies", price: 15.0 }),
+    Product.create({ productName: 'Codewars', price: 20.0 }),
+    Product.create({ productName: 'Dune', category: 'movies', price: 15.0 }),
   ]);
 
-  console.log(`seeded ${users.length} users`);
-  console.log(`seeded ${products.length} products`);
+  const orders = await Promise.all([
+    Order.create({
+      userId: users[0].id,
+      productId: products[0].id,
+      quantity: 2,
+    }),
+    Order.create({
+      userId: users[0].id,
+      productId: products[1].id,
+      quantity: 1,
+    }),
+    Order.create({
+      userId: users[1].id,
+      productId: products[1].id,
+      quantity: 3,
+    }),
+  ]);
+
+  console.log(
+    `seeded ${users.length} users, ${products.length} products, and ${orders.length} orders`
+  );
   console.log(`seeded successfully`);
   return {
     users: {
@@ -36,6 +55,7 @@ async function seed() {
       codewars: products[0],
       dune: products[1],
     },
+    orders
   };
 }
 
@@ -45,16 +65,16 @@ async function seed() {
  The `seed` function is concerned only with modifying the database.
 */
 async function runSeed() {
-  console.log("seeding...");
+  console.log('seeding...');
   try {
     await seed();
   } catch (err) {
     console.error(err);
     process.exitCode = 1;
   } finally {
-    console.log("closing db connection");
+    console.log('closing db connection');
     await db.close();
-    console.log("db connection closed");
+    console.log('db connection closed');
   }
 }
 
