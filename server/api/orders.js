@@ -1,11 +1,11 @@
-const router = require("express").Router();
+const router = require('express').Router();
 const {
   models: { Order },
-} = require("../db");
+} = require('../db');
 module.exports = router;
 
 // GET /api/orders  ==> all orders
-router.get("/", async (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
     const orders = await Order.findAll();
     res.json(orders);
@@ -15,7 +15,7 @@ router.get("/", async (req, res, next) => {
 });
 
 // GET /api/orders/:id == > single order with id
-router.get("/:id", async (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
   try {
     const singleOrder = await Order.findOne({
       where: {
@@ -29,17 +29,35 @@ router.get("/:id", async (req, res, next) => {
 });
 
 // POST /api/orders == > create new order entry
-router.post("/", async (req, res, next) => {
+router.post('/', async (req, res, next) => {
   try {
-    const newOrder = await Order.create(req.body);
-    res.json(newOrder);
+    // find or create the order
+    const [order, created] = await Order.findOrCreate({
+      where: {
+        userId: req.body.userId,
+        productId: req.body.productId,
+      },
+      defaults: req.body,
+    });
+
+    if (created) {
+      res.json(order);
+    }
+    // if order already exists, update instead
+    else {
+      const updatedOrder = await order.update({
+        ...req.body,
+        quantity: req.body.quantity + order.quantity, //
+      });
+      res.json(updatedOrder);
+    }
   } catch (err) {
     next(err);
   }
 });
 
 // PUT /api/orders/:id ==> edit order with id
-router.put("/:id", async (req, res, next) => {
+router.put('/:id', async (req, res, next) => {
   try {
     const orderToUpdate = await Order.findByPk(req.params.id);
     const updatedOrder = await orderToUpdate.update(req.body);
@@ -50,7 +68,7 @@ router.put("/:id", async (req, res, next) => {
 });
 
 // DELETE /api/orders/:id ==> delete order with id
-router.delete("/:id", async (req, res, next) => {
+router.delete('/:id', async (req, res, next) => {
   try {
     const orderToDelete = await Order.findByPk(req.params.id);
     await orderToDelete.destroy();
