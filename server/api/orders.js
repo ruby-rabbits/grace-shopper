@@ -4,7 +4,7 @@ const {
 } = require("../db");
 module.exports = router;
 
-// GET /  ==> all orders
+// GET /api/orders  ==> all orders
 router.get("/", async (req, res, next) => {
   try {
     const orders = await Order.findAll();
@@ -14,7 +14,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-// GET /:id == > single order with id
+// GET /api/orders/:id == > single order with id
 router.get("/:id", async (req, res, next) => {
   try {
     const singleOrder = await Order.findOne({
@@ -28,7 +28,7 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-// POST / == > create new order entry
+// POST /api/orders == > create new order entry
 router.post("/", async (req, res, next) => {
   try {
     const newOrder = await Order.create(req.body);
@@ -38,7 +38,7 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-// PUT /:id ==> edit order with id
+// PUT /api/orders/:id ==> edit order with id
 router.put("/:id", async (req, res, next) => {
   try {
     const orderToUpdate = await Order.findByPk(req.params.id);
@@ -49,7 +49,7 @@ router.put("/:id", async (req, res, next) => {
   }
 });
 
-// DELETE /:id ==> delete order with id
+// DELETE /api/orders/:id ==> delete order with id
 router.delete("/:id", async (req, res, next) => {
   try {
     const orderToDelete = await Order.findByPk(req.params.id);
