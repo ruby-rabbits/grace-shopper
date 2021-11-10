@@ -29,7 +29,10 @@ class Cart extends React.Component {
         <div>
           {this.props.products.length === 0
             ? `No products in cart`
-            : `${this.props.products.length} items in cart`
+            : this.props.products.map(product => {
+              return JSON.stringify(product);
+            })
+            // : `${this.props.products.length} items in cart`
             // : this.props.products.map((product) => {
             //     return (
             //       <div key={product.id}>
