@@ -8,6 +8,14 @@ class Cart extends React.Component {
     super();
   }
 
+  componentDidUpdate(prevProps){
+    if (this.props.userId != prevProps.userId) {
+      console.log(this.props.userId)
+      this.props.getCart(this.props.userId);
+
+    }
+  }
+
   render() {
     return (
       <div className="cart">
@@ -40,7 +48,8 @@ class Cart extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  products: state.products,
+  products: state.cart,
+  userId: state.auth.id
 });
 
 const mapDispatchToProps = (dispatch) => {
