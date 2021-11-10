@@ -2,7 +2,7 @@
 
 const {
   db,
-  models: { User, Product, Order },
+  models: { User, Product, Order, Category },
 } = require('../server/db');
 
 /**
@@ -24,6 +24,14 @@ async function seed() {
     Product.create({ productName: 'Dune', category: 'movies', price: 15.0 }),
   ]);
 
+  const categories = await Promise.all([
+    Category.create({ categoryDisplayName: 'Movies', categoryURLName: 'movies'}),
+    Category.create({ categoryDisplayName: 'Concerts', categoryURLName: 'concerts'}),
+    Category.create({ categoryDisplayName: 'Theatre Shows', categoryURLName: 'theatre'}),
+    Category.create({ categoryDisplayName: 'Sporting Events', categoryURLName: 'sports'}),
+    Category.create({ categoryDisplayName: 'Miscellaneous', categoryURLName: 'misc'})
+  ]);
+
   const orders = await Promise.all([
     Order.create({
       userId: users[0].id,
@@ -43,7 +51,7 @@ async function seed() {
   ]);
 
   console.log(
-    `seeded ${users.length} users, ${products.length} products, and ${orders.length} orders`
+    `seeded ${users.length} users, ${products.length} products, ${categories.length} categories and ${orders.length} orders`
   );
   console.log(`seeded successfully`);
   return {
