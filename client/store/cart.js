@@ -43,7 +43,7 @@ export const remFromCart = (product) => {
 export const fetchAllCartProducts = (userId) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`/api/users/${userId}/products`);
+      const { data } = await axios.get(`/api/users/${userId}/cart`);
       dispatch(fetchCartProducts(data));
     } catch (error) {
       console.log(error);
@@ -56,7 +56,7 @@ const initialState = [];
 export default function cartsReducer(state = initialState, action) {
   switch (action.type) {
     case GET_CART_PRODUCTS:
-      return { ...state, ...action.products };
+      return [ ...state, ...action.products ];
     default:
       return state;
   }
