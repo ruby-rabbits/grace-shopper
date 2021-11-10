@@ -22,15 +22,16 @@ class Routes extends Component {
       <div>
         {isLoggedIn ? (
           <Switch>
-            <Route path="/" component={LandingPage} />
+            <Route exact path="/" component={LandingPage} />
           </Switch>
         ) : (
           <Switch>
-            <Route path='/' exact component={ LandingPage } />
-            <Route path="/login" component={Login} />
-            <Route path="/signup" component={Signup} />
+            <Route exact path='/' exact component={ LandingPage } />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/signup" component={Signup} />
           </Switch>
         )}
+        {/* This is commented out, as I ran into some fuzzy loading if I made a seperate switch router. EDIT: FIXED with by stating EXACT PATH*/}
         <Switch>
           <Route exact path = '/products/:productId' component={SingleProduct} />
         </Switch>

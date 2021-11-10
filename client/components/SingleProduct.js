@@ -14,16 +14,17 @@ export class SingleProduct extends React.Component {
     // console.log(this.props)
     return(
       <div>
-       <ul>
+        <ul>
           <img src={product.picture}/>
           <li>{product.productName}</li>
           <li>{product.description}</li>
           <li>{product.price}</li>
-       </ul>
+        </ul>
        More stuff can go here! (Maybe an addToCart? Or a quantity they want to purchase in the format of a form/submit?)
-       <Link to = '/'>
-        <h2>Back to All Products</h2>
-       </Link>
+       {/* This is a link back to the home page (All Products) */}
+        <Link to = '/'>
+          <h2>Back to All Products</h2>
+        </Link>
       </div>
     )
   }
