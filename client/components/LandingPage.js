@@ -24,7 +24,7 @@ export class LandingPage extends React.Component {
                         products.map(product => {
                             return(
                             <ul key={product.id}>
-                                <Link to = {`/products/1`}>
+                                <Link to = {`/products/${product.id}`}>
                                 <img src={product.picture} />
                                 </Link>
                                 <li>{product.productName}</li>
