@@ -4,10 +4,10 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { withRouter, Route, Switch, Redirect } from "react-router-dom";
 import { Login, Signup } from "./components/AuthForm";
-import Home from "./components/Home";
 import LandingPage from "./components/LandingPage";
 import AllProducts from './components/AllProducts';
 import SingleProduct from './components/SingleProduct';
+import MyAccount from './components/MyAccount';
 import Cart from "./components/Cart";
 import { me } from "./store";
 
@@ -30,11 +30,12 @@ class Routes extends Component {
 
 
             <Route exact path="/" component={LandingPage} />
-              
-             <Route exact path="/shows/:category" component={Signup} />
+
+            <Route path="/myAccount" component={MyAccount} />  
+            <Route exact path="/shows/:category" component={Signup} />
             <Route exact path="/shows" component={AllProducts} />
             {/* should be to their ind. user cart */}
-              
+
              <Route path="/cart" component={Cart} />
 
           </Switch>
