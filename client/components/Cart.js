@@ -8,9 +8,14 @@ class Cart extends React.Component {
     super();
   }
 
+  componentDidMount() {
+    if (this.props.userId){
+      this.props.getCart(this.props.userId);
+    }
+  }
+
   componentDidUpdate(prevProps){
     if (this.props.userId != prevProps.userId) {
-      console.log(this.props.userId)
       this.props.getCart(this.props.userId);
 
     }
