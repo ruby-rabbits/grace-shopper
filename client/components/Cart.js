@@ -29,18 +29,20 @@ class Cart extends React.Component {
         <div>
           {this.props.products.length === 0
             ? `No products in cart`
-            : this.props.products.map((product) => {
-                return (
-                  <div key={product.id}>
-                    <Link to={`/products/${product.id}`}>
-                      {product.productName}
-                    </Link>
-                    {product.price}
-                    {product.quantity}
-                    <img src={product.picture} />
-                  </div>
-                );
-              })}
+            : `${this.props.products.length} items in cart`
+            // : this.props.products.map((product) => {
+            //     return (
+            //       <div key={product.id}>
+            //         <Link to={`/products/${product.id}`}>
+            //           {product.productName}
+            //         </Link>
+            //         {product.price}
+            //         {product.quantity}
+            //         <img src={product.picture} />
+            //       </div>
+            //     );
+            //   })
+          }
         </div>
         <div>
           <button id="checkout">
