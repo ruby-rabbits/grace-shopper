@@ -18,6 +18,10 @@ const User = db.define('user', {
   isAdmin: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
+  },
+  picture: {
+    type: Sequelize.STRING,
+    defaultValue: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/1024px-User-avatar.svg.png"
   }
 })
 
