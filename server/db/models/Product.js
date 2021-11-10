@@ -14,16 +14,6 @@ const Product = db.define("product", {
     type: Sequelize.TEXT,
     defaultValue: "This is a ticket.",
   },
-  category: {
-    type: Sequelize.ENUM(
-      "movies",
-      "concerts",
-      "theatre shows",
-      "sporting events",
-      "miscellaneous"
-    ),
-    defaultValue: "miscellaneous",
-  },
   price: {
     type: Sequelize.DECIMAL(12, 2),
     defaultValue: 0.01,
