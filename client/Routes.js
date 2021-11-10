@@ -1,5 +1,3 @@
-
-
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { withRouter, Route, Switch, Redirect } from "react-router-dom";
@@ -9,8 +7,8 @@ import AllProducts from './components/AllProducts';
 import SingleProduct from './components/SingleProduct';
 import MyAccount from './components/MyAccount';
 import Cart from "./components/Cart";
+import Checkout from "./components/Checkout";
 import { me } from "./store";
-
 
 /**
  * COMPONENT
@@ -35,21 +33,22 @@ class Routes extends Component {
             <Route exact path="/shows/:category" component={Signup} />
             <Route exact path="/shows" component={AllProducts} />
             {/* should be to their ind. user cart */}
-
-             <Route path="/cart" component={Cart} />
+            <Route path="/cart" component={Cart} />
+            <Route path="/checkout" component={Checkout} />
 
           </Switch>
         ) : (
           <Switch>
-            <Route exact path='/' exact component={ LandingPage } />
+            <Route exact path="/" exact component={LandingPage} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={Signup} />
             <Route path="/cart" component={Cart} />
+            <Route path="/checkout" component={Checkout} />
           </Switch>
         )}
         {/* This is commented out, as I ran into some fuzzy loading if I made a seperate switch router. EDIT: FIXED with by stating EXACT PATH*/}
         <Switch>
-          <Route exact path = '/products/:productId' component={SingleProduct} />
+          <Route exact path="/products/:productId" component={SingleProduct} />
         </Switch>
       </div>
     );
