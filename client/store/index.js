@@ -5,14 +5,17 @@ import {composeWithDevTools} from 'redux-devtools-extension'
 import auth from './auth'
 import users from './users'
 import productsReducer from './products'
+import singleProductReducer from './singleProduct'
 
 
+//Muwhahahaah here is our combined reducers! The original reducer was confusing to read so I've sort of reformatted it into something more readable. We can switch it back though if its better. Its commented out here below.
 
 // const reducer = combineReducers({ auth }, { users }, { products: productsReducer })
-const reducer = combineReducers({ 
+const reducer = combineReducers({
   auth: auth,
   users: users,
-  products: productsReducer
+  products: productsReducer,
+  singleProduct: singleProductReducer
 });
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
