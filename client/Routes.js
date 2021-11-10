@@ -1,11 +1,14 @@
+
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { withRouter, Route, Switch, Redirect } from "react-router-dom";
 import { Login, Signup } from "./components/AuthForm";
 import Home from "./components/Home";
 import LandingPage from "./components/LandingPage";
+import SingleProduct from './components/SingleProduct';
 import Cart from "./components/Cart";
 import { me } from "./store";
+
 
 /**
  * COMPONENT
@@ -22,18 +25,23 @@ class Routes extends Component {
       <div>
         {isLoggedIn ? (
           <Switch>
-            <Route path="/" component={LandingPage} />
+            <Route exact path="/" component={LandingPage} />
             {/* should be to their ind. user cart */}
-            <Route path="/cart" component={Cart} />
+              
+             <Route path="/cart" component={Cart} />
           </Switch>
         ) : (
           <Switch>
-            <Route path="/" exact component={LandingPage} />
-            <Route path="/login" component={Login} />
-            <Route path="/signup" component={Signup} />
+            <Route exact path='/' exact component={ LandingPage } />
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/signup" component={Signup} />
             <Route path="/cart" component={Cart} />
           </Switch>
         )}
+        {/* This is commented out, as I ran into some fuzzy loading if I made a seperate switch router. EDIT: FIXED with by stating EXACT PATH*/}
+        <Switch>
+          <Route exact path = '/products/:productId' component={SingleProduct} />
+        </Switch>
       </div>
     );
   }
