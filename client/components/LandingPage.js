@@ -7,7 +7,7 @@ import { fetchAllProducts } from '../store/products'
 export class LandingPage extends React.Component {
     componentDidMount() {
         this.props.fetchAllProducts()
-    }    
+    }
     render() {
         const products = this.props.products;
         const isLoggedIn = this.props.isLoggedIn;
@@ -22,20 +22,23 @@ export class LandingPage extends React.Component {
                 <div>
                     {
                         products.map(product => {
-                            return(<ul key={product.id}>
+                            return(
+                            <ul key={product.id}>
+                                <Link to = {`/products/${product.id}`}>
                                 <img src={product.picture} />
+                                </Link>
                                 <li>{product.productName}</li>
                                 <li>{product.description}</li>
                                 <li>{product.price}</li>
-                            </ul>)                            
+                            </ul>)
                         })
                     }
                 </div>
             </div>
             )
-            
+
     }
-    
+
 }
   const mapState = state => {
       return {
@@ -50,6 +53,5 @@ export class LandingPage extends React.Component {
     fetchAllProducts: () => dispatch(fetchAllProducts())
     }
   }
-  
+
   export default connect(mapState,mapDispatch)(LandingPage)
-  
