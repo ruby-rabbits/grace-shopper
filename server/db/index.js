@@ -17,6 +17,10 @@ Category.hasMany(Product)
 Cart.hasOne(User); //User model will have cartId
 User.belongsTo(Cart);
 
+// many-many for cart and products
+Cart.belongsToMany(Product, {through: Cart_Product});
+Product.belongsToMany(Cart, {through: Cart_Product})
+
 module.exports = {
   db,
   models: {
