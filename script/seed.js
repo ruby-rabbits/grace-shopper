@@ -19,11 +19,6 @@ async function seed() {
     User.create({ username: 'murphy', password: '123' }),
   ]);
 
-  const products = await Promise.all([
-    Product.create({ productName: 'Codewars', price: 20.0 }),
-    Product.create({ productName: 'Dune', category: 'movies', price: 15.0 }),
-  ]);
-
   const categories = await Promise.all([
     Category.create({ categoryDisplayName: 'Movies', categoryURLName: 'movies'}),
     Category.create({ categoryDisplayName: 'Concerts', categoryURLName: 'concerts'}),
@@ -31,6 +26,14 @@ async function seed() {
     Category.create({ categoryDisplayName: 'Sporting Events', categoryURLName: 'sports'}),
     Category.create({ categoryDisplayName: 'Miscellaneous', categoryURLName: 'misc'})
   ]);
+
+  const products = await Promise.all([
+    Product.create({ productName: 'Codewars', price: 20.0, categoryId: 5 }),
+    Product.create({ productName: 'Dune', price: 15.0, categoryId: 1}),
+  ]);
+
+
+  // await products[1].setCategory(categories[0])
 
   const orders = await Promise.all([
     Order.create({

@@ -5,6 +5,7 @@ const GET_CART_PRODUCTS = "GET_CART_PRODUCTS";
 const ADD_QUANTITY = "ADD_QUANTITY";
 const DECREASE_QUANTITY = "DECREASE_QUANTITY";
 const REMOVE_FROM_CART = "REMOVE_FROM_CART";
+const CLEAR_CART = 'CLEAR_CART'
 
 // action creators
 //get all products user put in cart
@@ -39,6 +40,13 @@ export const remFromCart = (product) => {
   };
 };
 
+// clear cart
+export const clearCart = () => {
+  return {
+    type : CLEAR_CART
+  }
+}
+
 // thunks
 export const fetchAllCartProducts = (userId) => {
   return async (dispatch) => {
@@ -57,6 +65,8 @@ export default function cartsReducer(state = initialState, action) {
   switch (action.type) {
     case GET_CART_PRODUCTS:
       return [ ...state, ...action.products ];
+    case CLEAR_CART:
+      return [];
     default:
       return state;
   }
