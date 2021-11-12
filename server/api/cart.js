@@ -25,13 +25,13 @@ router.get("/user/:userId", async (req, res, next) => {
   try {
     const cartIdForUser = await User.findByPk(Number(req.params.userId));
     const thisCartId = await cartIdForUser.cartId;
-    const ordersInCart = await Cart_Product.findAll({
-      where: {
-        cartId: thisCartId,
-        purchased: false,
+    // console.log("THIS IS WHAT WE LOOKING FOR: ", thisCartId);
+    const cart = await Cart.findByPk(thisCartId, {
+      include: {
+        model: Product,
       },
     });
-    res.json(ordersInCart);
+    res.json(cart.products);
   } catch (err) {
     next(err);
   }
