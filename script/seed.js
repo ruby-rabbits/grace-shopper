@@ -33,25 +33,6 @@ async function seed() {
   ]);
 
 
-
-  // const orders = await Promise.all([
-  //   Order.create({
-  //     userId: users[0].id,
-  //     productId: products[0].id,
-  //     quantity: 2,
-  //   }),
-  //   Order.create({
-  //     userId: users[0].id,
-  //     productId: products[1].id,
-  //     quantity: 1,
-  //   }),
-  //   Order.create({
-  //     userId: users[1].id,
-  //     productId: products[1].id,
-  //     quantity: 3,
-  //   }),
-  // ]);
-
   console.log(
     `seeded ${users.length} users, ${products.length} products, ${categories.length} categories`
   );

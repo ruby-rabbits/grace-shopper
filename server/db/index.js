@@ -4,7 +4,6 @@ const db = require("./db");
 
 const User = require("./models/User");
 const Product = require("./models/Product");
-// const Order = require("./models/Order");
 const Category = require("./models/Category")
 const Cart = require('./models/Cart')
 const Cart_Product = require('./models/Cart_Product')
@@ -26,7 +25,6 @@ module.exports = {
   models: {
     User,
     Product,
-    // Order,
     Category,
     Cart,
     Cart_Product
