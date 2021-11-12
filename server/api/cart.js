@@ -20,7 +20,7 @@ module.exports = router;
 //   }
 // });
 
-//get products from users cart
+//get products from users cart, filter on front end allows us to use this route to show products in cart and products user has previously bought
 router.get("/user/:userId", async (req, res, next) => {
   try {
     const cartIdForUser = await User.findByPk(Number(req.params.userId));
@@ -68,6 +68,51 @@ router.post("/user/:userId", async (req, res, next) => {
       });
       res.json(updatedProduct);
     }
+  } catch (err) {
+    next(err);
+  }
+});
+
+//PUT change columns in cart_products: amountPaid, purchased, purchaseDate
+router.put("/user/:userId/checkout", async (req, res, next) => {
+  try {
+    const cartIdForUser = await User.findByPk(Number(req.params.userId));
+    const thisCartId = await cartIdForUser.cartId;
+
+    const updatedCart = await Cart_Product.update(
+      {
+        purchased: true,
+        purchaseDate: Date.now(),
+      },
+      {
+        where: {
+          cartId: Number(thisCartId),
+          purchased: false,
+        },
+      }
+    );
+    res.json(updatedCart);
+  } catch (err) {
+    next(err);
+  }
+});
+
+//PUT change quantity to specified amount
+router.put("/user/:userId/quantity", async (req, res, next) => {
+  try {
+    const cartIdForUser = await User.findByPk(Number(req.params.userId));
+    const thisCartId = await cartIdForUser.cartId;
+
+    const productToUpdate = await Cart_Product.findOne({
+      where: {
+        cartId: Number(thisCartId),
+        productId: Number(req.body.productId),
+      },
+    });
+    const updatedProduct = await productToUpdate.update({
+      quantity: req.body.quantity,
+    });
+    res.json(updatedProduct);
   } catch (err) {
     next(err);
   }
