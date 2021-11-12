@@ -5,36 +5,26 @@ const {
 
 module.exports = router;
 
-// GET /api/orders  ==> all orders
-router.get("/", async (req, res, next) => {
-  try {
-    const cart = await Product.findAll();
-    res.json(cart);
-  } catch (err) {
-    next(err);
-  }
-});
+// this worked with orders table, Do we want to be able to click on a ticket in the cart and go back to its single product page. Need to adjust logic
 
-// GET /api/products/:id == > single order with id
-router.get("/:id", async (req, res, next) => {
-  try {
-    const singleProduct = await Product.findOne({
-      where: {
-        id: req.params.id,
-      },
-    });
-    res.json(singleProduct);
-  } catch (err) {
-    next(err);
-  }
-});
+// router.get("/:id", async (req, res, next) => {
+//   try {
+//     const singleProduct = await Product.findOne({
+//       where: {
+//         id: req.params.id,
+//       },
+//     });
+//     res.json(singleProduct);
+//   } catch (err) {
+//     next(err);
+//   }
+// });
 
 //get products from users cart
-router.get("/:userId/cart", async (req, res, next) => {
+router.get("/user/:userId", async (req, res, next) => {
   try {
     const cartIdForUser = await User.findByPk(Number(req.params.userId));
     const thisCartId = await cartIdForUser.cartId;
-    console.log("THIS IS WHAT WE LOOKING FOR: ", thisCartId);
     const ordersInCart = await Cart_Product.findAll({
       where: {
         cartId: thisCartId,
@@ -47,14 +37,17 @@ router.get("/:userId/cart", async (req, res, next) => {
   }
 });
 
-// POST /api/orders == > create new order entry
-router.post("/", async (req, res, next) => {
+// POST  == > create new cart_product entry
+router.post("/user/:userId", async (req, res, next) => {
   try {
-    // find or create the order
-    const [product, created] = await Product.findOrCreate({
+    // find or create the product
+    const cartIdForUser = await User.findByPk(Number(req.params.userId));
+    const thisCartId = await cartIdForUser.cartId;
+    console.log("REQ BODY PRODUCTID", req.body.productId);
+    const [product, created] = await Cart_Product.findOrCreate({
       where: {
-        userId: req.body.userId,
-        productId: req.body.productId,
+        cartId: Number(thisCartId),
+        productId: Number(req.body.productId),
       },
       defaults: req.body,
     });
@@ -64,9 +57,15 @@ router.post("/", async (req, res, next) => {
     }
     // if order already exists, update instead
     else {
+      let quant = 0;
+      if (req.body.quantity === undefined) {
+        quant = 1;
+      } else {
+        quant = req.body.quantity;
+      }
       const updatedProduct = await product.update({
         ...req.body,
-        quantity: req.body.quantity + product.quantity, //
+        quantity: quant + product.quantity,
       });
       res.json(updatedProduct);
     }
