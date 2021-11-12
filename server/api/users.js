@@ -1,43 +1,30 @@
-const router = require('express').Router()
-const { models: { User, Order }} = require('../db')
-module.exports = router
+const router = require("express").Router();
+const {
+  models: { User, Cart_Product },
+} = require("../db");
+module.exports = router;
 
-router.get('/', async (req, res, next) => {
+router.get("/", async (req, res, next) => {
   try {
     const users = await User.findAll({
       // explicitly select only the id and username fields - even though
       // users' passwords are encrypted, it won't help if we just
       // send everything to anyone who asks!
-      attributes: ['id', 'username', 'isAdmin', 'picture']
-    })
-    res.json(users)
-  } catch (err) {
-    next(err)
-  }
-})
-
-// GET /api/users/:userId/cart
-router.get('/:userId/cart', async (req,res,next) => {
-  try{
-    const ordersInCart = await Order.findAll({
-      where: {
-        userId : Number(req.params.userId),
-        inCart: true
-      }
+      attributes: ["id", "username", "isAdmin", "picture"],
     });
-    res.json(ordersInCart)
+    res.json(users);
   } catch (err) {
-    next(err)
+    next(err);
   }
-})
+});
 
 // PUT /api/users/:id ==> update user info
-router.put('/:id', async (req,res,next) => {
-  try{
+router.put("/:id", async (req, res, next) => {
+  try {
     const userToUpdate = await User.findByPk(req.body.id);
-    const updated = await userToUpdate.update(req.body)
-    res.json(updated)
+    const updated = await userToUpdate.update(req.body);
+    res.json(updated);
   } catch (err) {
-    next(err)
+    next(err);
   }
-})
+});
