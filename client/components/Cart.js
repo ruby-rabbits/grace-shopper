@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchAllCartProducts } from '../store/cart';
-import ProductInCart from './CartProduct';
+import ProductInCart from './ProductInCart';
 class Cart extends React.Component {
   constructor() {
     super();
@@ -23,8 +23,6 @@ class Cart extends React.Component {
 
 
   render() {
-    console.log(this.props);
-
     return (
       <div className="cart">
         <h1>Your Items:</h1>
@@ -35,30 +33,7 @@ class Cart extends React.Component {
               ? 'Empty Cart'
               : this.props.cart.map((product) => {
                   return (
-                    <ProductInCart product={product} key={product.id}/>
-                    // <div key={product.id}>
-                    //   <h3>{product.productName}</h3>
-                    //   <img
-                    //     style={{ width: '10rem', height: '13rem' }}
-                    //     src={product.picture}
-                    //   ></img>
-                    //   <div>
-                    //     {/* <li>Quantity: {product.cart_product.quantity}</li>
-                    //      */}
-                    //     <label htmlFor="quantity">Quantity: </label>
-                    //     <input
-                    //       type="number"
-                    //       id="quantity"
-                    //       name="quantity"
-                    //       min="1"
-                    //       value={product.cart_product.quantity}
-                    //     />
-
-                    //     <p>Price: {price}</p>
-                    //     {/* For testing purposes */}
-                    //   </div>
-                    //   <button style={{ backgroundColor: 'red' }}>Remove</button>
-                    // </div>
+                    <ProductInCart userId={this.props.userId} product={product} key={product.id}/>
                   );
                 })
           }
