@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { models: { User, Order }} = require('../db')
+const { models: { User }} = require('../db')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
@@ -16,20 +16,20 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-// GET /api/users/:userId/cart
-router.get('/:userId/cart', async (req,res,next) => {
-  try{
-    const ordersInCart = await Order.findAll({
-      where: {
-        userId : Number(req.params.userId),
-        inCart: true
-      }
-    });
-    res.json(ordersInCart)
-  } catch (err) {
-    next(err)
-  }
-})
+// // GET /api/users/:userId/cart
+// router.get('/:userId/cart', async (req,res,next) => {
+//   try{
+//     const ordersInCart = await Order.findAll({
+//       where: {
+//         userId : Number(req.params.userId),
+//         inCart: true
+//       }
+//     });
+//     res.json(ordersInCart)
+//   } catch (err) {
+//     next(err)
+//   }
+// })
 
 // PUT /api/users/:id ==> update user info
 router.put('/:id', async (req,res,next) => {

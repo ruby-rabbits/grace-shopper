@@ -3,6 +3,7 @@ const db = require('../db')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt');
 const axios = require('axios');
+const Cart = require('./Cart');
 
 const SALT_ROUNDS = 5;
 
@@ -14,7 +15,21 @@ const User = db.define('user', {
   },
   password: {
     type: Sequelize.STRING,
+    defaultValue: '1234'
   },
+  firstName: {
+    type: Sequelize.STRING,
+    defaultValue: null
+  },
+  lastName: {
+    type: Sequelize.STRING,
+    defaultValue: null
+  },
+  address: {
+    type: Sequelize.STRING,
+    defaultValue: null
+  },
+
   isAdmin: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
@@ -77,6 +92,12 @@ const hashPassword = async(user) => {
   }
 }
 
+const assignCart = async (user) => {
+  let {id} = await Cart.create();
+  user.cartId = id;
+}
+
 User.beforeCreate(hashPassword)
+User.beforeCreate(assignCart)
 User.beforeUpdate(hashPassword)
 User.beforeBulkCreate(users => Promise.all(users.map(hashPassword)))
