@@ -4,6 +4,11 @@ class ProductInCart extends React.Component{
   constructor(props){
     super(props);
     this.state = {quantity: props.product.cart_product.quantity};
+    this.onQuantityChange = this.onQuantityChange.bind(this);
+  }
+
+  onQuantityChange(e){
+    this.setState({quantity: e.target.value});
   }
 
   render(){
@@ -25,6 +30,7 @@ class ProductInCart extends React.Component{
           name="quantity"
           min="1"
           value={this.state.quantity}
+          onChange={this.onQuantityChange}
         />
 
         <p>Price: {price}</p>
