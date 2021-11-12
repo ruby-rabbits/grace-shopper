@@ -23,7 +23,7 @@ async function seed() {
     User.create({ username: 'murphy', password: '123' }),
   ]);
 
-  const mockUsers = await Promise.all(userData.map(user => User.create(user)))
+  const mockUsers = await Promise.all(userData.map(user => User.create({...user, password: '123'})))
 
   const categories = await Promise.all([
     Category.create({ categoryDisplayName: 'Movies', categoryURLName: 'movies'}),
