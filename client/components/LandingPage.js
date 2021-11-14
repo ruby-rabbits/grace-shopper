@@ -15,10 +15,12 @@ export class LandingPage extends React.Component {
     return (
       <div>
         {isLoggedIn ? (
-          <div>Welcome, {this.props.username}!</div>
+          <h1 style={{marginTop: '0'}}>Welcome, {this.props.username}!</h1>
         ) : (
-          <div>Welcome, Guest!</div>
+          <h1 style={{marginTop: '0'}}>Welcome, Guest!</h1>
         )}
+        <h3>What do you want to see?</h3>
+
         { (products.length === 0) ? 'Loading' : <AllProducts />}
       </div>
     );

@@ -22,7 +22,7 @@ class Routes extends Component {
     const { isLoggedIn } = this.props;
 
     return (
-      <div>
+      <div className="routes">
         {isLoggedIn ? (
           <Switch>
 

@@ -1,6 +1,9 @@
 body {
   font-family: sans-serif;
+  margin: 0;
 }
+
+
 
 a {
   text-decoration: none;
@@ -10,24 +13,60 @@ label {
   display: block;
 }
 
+nav {
+  background-color: #635F5F;
+}
+
+.all-links {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav h1 {
+  margin: 0
+}
+
 nav a {
   display: inline-block;
   margin: 1em;
   font-weight: bold;
   padding: 8px 16px;
+  color: white
 }
 
-#cartLink {
+.routes {
+  padding: 2rem 2.5rem
+}
+
+/* #cartLink {
   position: absolute;
   right: 80px;
-}
+} */
 
 form div {
   margin: 1em;
   display: inline-block;
 }
 
-.allProducts {
+.all-product-container {
+  width: 75%
+}
+
+.all-products {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 2rem 0;
+  gap: 2rem;
+}
+
+.all-products img {
+  width: 10rem;
+  height: 12rem;
+}
+
+.product-card {
+  flex-basis: 20%
 }
 
 .user{
