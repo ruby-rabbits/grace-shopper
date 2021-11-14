@@ -35,6 +35,10 @@ nav a {
   color: white
 }
 
+nav a:hover {
+  color: blue
+}
+
 .routes {
   padding: 2rem 2.5rem
 }
