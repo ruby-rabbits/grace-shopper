@@ -29,8 +29,8 @@ class Routes extends Component {
 
             <Route exact path="/" component={LandingPage} />
 
-            <Route path="/myAccount" component={MyAccount} />  
-            <Route exact path="/shows/:category" component={Signup} />
+            <Route path="/myAccount" component={MyAccount} />
+            {/* <Route exact path="/shows/:category" component={Signup} /> */}
             <Route exact path="/shows" component={AllProducts} />
             {/* should be to their ind. user cart */}
             <Route path="/cart" component={Cart} />

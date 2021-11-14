@@ -13,7 +13,6 @@ class ProductInCart extends React.Component {
     this.setState({ quantity: e.target.value });
     // console.log(this.props);
     const {userId, product} = this.props;
-    console.log({userId, quantity : this.state.quantity, productId: product.id})
     this.props.changeQuantity({userId, quantity : this.state.quantity, productId: product.id});
   }
 

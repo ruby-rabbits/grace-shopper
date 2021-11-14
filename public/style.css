@@ -27,6 +27,9 @@ form div {
   display: inline-block;
 }
 
+.allProducts {
+}
+
 .user{
   display: flex;
   justify-content: flex-start
