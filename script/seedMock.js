@@ -70,7 +70,7 @@ async function seed() {
   // Adding in movies data from OMDB api
   const movie_products = await Promise.all(
     moviesData.map((movie) => {
-      let price = (Math.random()*100).toFixed(2);
+      let price = (Math.random()*30).toFixed(2);
       let categoryId = Math.floor(Math.random() * 5) +1;
       let date = randomDate(new Date(), new Date(2022, 12, 24))
       Product.create({price, date, categoryId, picture: movie.Poster, productName: movie.Title})
