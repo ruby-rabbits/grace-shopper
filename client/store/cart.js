@@ -41,7 +41,14 @@ export const clearCart = () => {
   }
 }
 
-const
+const _checkout = (products) => {
+  return {
+    type: CHECKOUT,
+    products
+  }
+}
+
+// const
 
 // thunks
 export const fetchAllCartProducts = (userId) => {
@@ -66,6 +73,18 @@ export const changeQuantity = ({userId, quantity, productId}) => {
   }
 }
 
+export const checkout = (userId) => {
+  return async (dispatch) => {
+    try {
+      const {data} = await axios.put(`/api/cart/user/${userId}/checkout`);
+      dispatch(_checkout(data));
+
+    } catch(error){
+      console.log('error in checkout thunk', error);
+    }
+  }
+}
+
 
 // reducer
 const initialState = [];
@@ -78,6 +97,8 @@ export default function cartsReducer(state = initialState, action) {
         if (product.id === action.updatedProduct.productId) product.cart_product = action.updatedProduct;
         return product
       })
+    case CHECKOUT:
+      return action.products
     // case CLEAR_CART:
     //   return [];
     default:
