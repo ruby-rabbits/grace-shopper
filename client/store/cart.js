@@ -6,7 +6,8 @@ const GET_CART_PRODUCTS = "GET_CART_PRODUCTS";
 // const DECREASE_QUANTITY = "DECREASE_QUANTITY";
 const CHANGE_QUANTITY = "CHANGE_QUANTITY";
 const REMOVE_FROM_CART = "REMOVE_FROM_CART";
-const CLEAR_CART = 'CLEAR_CART'
+const CLEAR_CART = 'CLEAR_CART';
+const CHECKOUT = 'CKECKOUT'
 
 // action creators
 //get all products user put in cart
@@ -16,22 +17,6 @@ export const fetchCartProducts = (products) => {
     products,
   };
 };
-
-// //increase num of specific item in cart(maybe a plus button)
-// export const addQuantity = (product) => {
-//   return {
-//     type: ADD_QUANTITY,
-//     product,
-//   };
-// };
-
-// //decrease num of specific item in cart(maybe a neg button)
-// export const decQuantity = (product) => {
-//   return {
-//     type: DECREASE_QUANTITY,
-//     product,
-//   };
-// };
 
 // change quantity
 const _changeQuantity = (updatedProduct) => {
@@ -55,6 +40,8 @@ export const clearCart = () => {
     type : CLEAR_CART
   }
 }
+
+const
 
 // thunks
 export const fetchAllCartProducts = (userId) => {
