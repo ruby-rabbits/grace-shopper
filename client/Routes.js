@@ -22,15 +22,15 @@ class Routes extends Component {
     const { isLoggedIn } = this.props;
 
     return (
-      <div>
+      <div className="routes">
         {isLoggedIn ? (
           <Switch>
 
 
             <Route exact path="/" component={LandingPage} />
 
-            <Route path="/myAccount" component={MyAccount} />  
-            <Route exact path="/shows/:category" component={Signup} />
+            <Route path="/myAccount" component={MyAccount} />
+            {/* <Route exact path="/shows/:category" component={Signup} /> */}
             <Route exact path="/shows" component={AllProducts} />
             {/* should be to their ind. user cart */}
             <Route path="/cart" component={Cart} />
