@@ -6,7 +6,7 @@ const GET_CART_PRODUCTS = "GET_CART_PRODUCTS";
 // const DECREASE_QUANTITY = "DECREASE_QUANTITY";
 const CHANGE_QUANTITY = "CHANGE_QUANTITY";
 const REMOVE_FROM_CART = "REMOVE_FROM_CART";
-const CLEAR_CART = 'CLEAR_CART'
+const CLEAR_CART = "CLEAR_CART";
 
 // action creators
 //get all products user put in cart
@@ -37,9 +37,9 @@ export const fetchCartProducts = (products) => {
 const _changeQuantity = (updatedProduct) => {
   return {
     type: CHANGE_QUANTITY,
-    updatedProduct
-  }
-}
+    updatedProduct,
+  };
+};
 
 //remove from cart
 export const remFromCart = (product) => {
@@ -52,9 +52,9 @@ export const remFromCart = (product) => {
 // clear cart
 export const clearCart = () => {
   return {
-    type : CLEAR_CART
-  }
-}
+    type: CLEAR_CART,
+  };
+};
 
 // thunks
 export const fetchAllCartProducts = (userId) => {
@@ -68,17 +68,33 @@ export const fetchAllCartProducts = (userId) => {
   };
 };
 
-export const changeQuantity = ({userId, quantity, productId}) => {
+export const changeQuantity = ({ userId, quantity, productId }) => {
   return async (dispatch) => {
-    try{
-      const {data} = await axios.put(`/api/cart/user/${userId}/quantity`, {quantity, productId});
+    try {
+      const { data } = await axios.put(`/api/cart/user/${userId}/quantity`, {
+        quantity,
+        productId,
+      });
       dispatch(_changeQuantity(data));
-    } catch(error){
-      console.log('error in changeQuantity', error);
+    } catch (error) {
+      console.log("error in changeQuantity", error);
     }
-  }
-}
+  };
+};
 
+export const removeItem = ({ userId, productId }) => {
+  return async (dispatch) => {
+    try {
+      console.log(userId, productId);
+      const { data } = await axios.delete(
+        `/api/cart/user/${userId}/${productId}`
+      );
+      dispatch(remFromCart(data));
+    } catch (error) {
+      console.log("error in removeItem", error);
+    }
+  };
+};
 
 // reducer
 const initialState = [];
@@ -87,10 +103,13 @@ export default function cartsReducer(state = initialState, action) {
     case GET_CART_PRODUCTS:
       return action.products;
     case CHANGE_QUANTITY:
-      return state.map(product => {
-        if (product.id === action.updatedProduct.productId) product.cart_product = action.updatedProduct;
-        return product
-      })
+      return state.map((product) => {
+        if (product.id === action.updatedProduct.productId)
+          product.cart_product = action.updatedProduct;
+        return product;
+      });
+    case REMOVE_FROM_CART:
+      return state.filter((product) => product.id !== action.product.productId);
     // case CLEAR_CART:
     //   return [];
     default:

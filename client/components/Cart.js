@@ -1,8 +1,8 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { fetchAllCartProducts } from '../store/cart';
-import ProductInCart from './ProductInCart';
+import React from "react";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import { fetchAllCartProducts } from "../store/cart";
+import ProductInCart from "./ProductInCart";
 class Cart extends React.Component {
   constructor() {
     super();
@@ -28,10 +28,14 @@ class Cart extends React.Component {
           {
             //would eventually be this.props.cart.map
             this.props.cart.length === 0
-              ? 'Empty Cart'
+              ? "Empty Cart"
               : this.props.cart.map((product) => {
                   return (
-                    <ProductInCart userId={this.props.userId} product={product} key={product.id}/>
+                    <ProductInCart
+                      userId={this.props.userId}
+                      product={product}
+                      key={product.id}
+                    />
                   );
                 })
           }

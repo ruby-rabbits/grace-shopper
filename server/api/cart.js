@@ -119,7 +119,7 @@ router.put("/user/:userId/quantity", async (req, res, next) => {
 });
 
 // DELETE /api/orders/:id ==> delete order with id
-router.delete("/user/:userId/", async (req, res, next) => {
+router.delete("/user/:userId/:productId", async (req, res, next) => {
   try {
     const cartIdForUser = await User.findByPk(Number(req.params.userId));
     const thisCartId = await cartIdForUser.cartId;
@@ -127,7 +127,7 @@ router.delete("/user/:userId/", async (req, res, next) => {
     const productToDelete = await Cart_Product.findOne({
       where: {
         cartId: Number(thisCartId),
-        productId: Number(req.body.productId),
+        productId: Number(req.params.productId),
       },
     });
     await productToDelete.destroy();
