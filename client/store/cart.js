@@ -6,7 +6,8 @@ const GET_CART_PRODUCTS = "GET_CART_PRODUCTS";
 // const DECREASE_QUANTITY = "DECREASE_QUANTITY";
 const CHANGE_QUANTITY = "CHANGE_QUANTITY";
 const REMOVE_FROM_CART = "REMOVE_FROM_CART";
-const CLEAR_CART = 'CLEAR_CART'
+const CLEAR_CART = 'CLEAR_CART';
+const CHECKOUT = 'CKECKOUT'
 
 // action creators
 //get all products user put in cart
@@ -16,22 +17,6 @@ export const fetchCartProducts = (products) => {
     products,
   };
 };
-
-// //increase num of specific item in cart(maybe a plus button)
-// export const addQuantity = (product) => {
-//   return {
-//     type: ADD_QUANTITY,
-//     product,
-//   };
-// };
-
-// //decrease num of specific item in cart(maybe a neg button)
-// export const decQuantity = (product) => {
-//   return {
-//     type: DECREASE_QUANTITY,
-//     product,
-//   };
-// };
 
 // change quantity
 const _changeQuantity = (updatedProduct) => {
@@ -56,6 +41,15 @@ export const clearCart = () => {
   }
 }
 
+const _checkout = (products) => {
+  return {
+    type: CHECKOUT,
+    products
+  }
+}
+
+// const
+
 // thunks
 export const fetchAllCartProducts = (userId) => {
   return async (dispatch) => {
@@ -79,6 +73,18 @@ export const changeQuantity = ({userId, quantity, productId}) => {
   }
 }
 
+export const checkout = (userId) => {
+  return async (dispatch) => {
+    try {
+      const {data} = await axios.put(`/api/cart/user/${userId}/checkout`);
+      dispatch(_checkout(data));
+
+    } catch(error){
+      console.log('error in checkout thunk', error);
+    }
+  }
+}
+
 
 // reducer
 const initialState = [];
@@ -91,6 +97,8 @@ export default function cartsReducer(state = initialState, action) {
         if (product.id === action.updatedProduct.productId) product.cart_product = action.updatedProduct;
         return product
       })
+    case CHECKOUT:
+      return action.products
     // case CLEAR_CART:
     //   return [];
     default:

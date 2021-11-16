@@ -79,7 +79,7 @@ router.put("/user/:userId/checkout", async (req, res, next) => {
     const cartIdForUser = await User.findByPk(Number(req.params.userId));
     const thisCartId = await cartIdForUser.cartId;
 
-    const updatedCart = await Cart_Product.update(
+    await Cart_Product.update(
       {
         purchased: true,
         purchaseDate: Date.now(),
@@ -91,6 +91,11 @@ router.put("/user/:userId/checkout", async (req, res, next) => {
         },
       }
     );
+    const {products : updatedCart} = await Cart.findByPk(thisCartId, {
+      include: {
+        model: Product,
+      },
+    });
     res.json(updatedCart);
   } catch (err) {
     next(err);
