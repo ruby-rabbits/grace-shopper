@@ -39,7 +39,7 @@ export class SingleProduct extends React.Component {
         this.props.product.id,
         this.state.quantity
       );
-      const successAlert = () => toast.success(`${this.state.quantity} tickets for ${this.props.product.productName} added to cart!`, toastEmitter);
+      const successAlert = () => toast.success(`${this.state.quantity} ticket(s) for ${this.props.product.productName} added to cart!`, toastEmitter);
       successAlert();
     } catch (e) {
       const errorAlert = () => toast.error(`error occurred`, toastEmitter);
