@@ -24,7 +24,6 @@ export class AdminProductAdd extends React.Component {
 
     handleSubmit(evt) {
         evt.preventDefault();
-        console.log(this.state);
         this.props.createProduct({ ...this.state });
         this.setState({
             productName: '',
@@ -40,8 +39,9 @@ export class AdminProductAdd extends React.Component {
       }
 
     render() {
-        const { productName, picture, description, price, categoryId } = this.state;
+        const { productName, picture, description, price, categoryId, error } = this.state;
         const { handleSubmit, handleChange } = this;
+        console.log(error);
         return (
             <form id='add-product-form' onSubmit={handleSubmit}>
               <label htmlFor='productName'>Product Name:</label>
@@ -62,14 +62,20 @@ export class AdminProductAdd extends React.Component {
                   <option value='2'>Test Option</option>
               </select>
               <button type='submit'>Add Product</button>
+              {error && error.response && <div> {error.response.data}</div> }
             </form>
+
           );
     }
 }
+
+const mapStateToProps = (state) => ({
+    error: state.products.error
+})
 
 const mapDispatchToProps = (dispatch) => ({
     createProduct: (product) => dispatch(createProduct(product)),
     fetchAllProducts: () => dispatch(fetchAllProducts())
   });
 
-  export default connect(null, mapDispatchToProps)(AdminProductAdd);
+  export default connect(mapStateToProps, mapDispatchToProps)(AdminProductAdd);

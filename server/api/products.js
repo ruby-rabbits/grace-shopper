@@ -35,7 +35,11 @@ router.post("/", async (req, res, next) => {
     const newProduct = await Product.create({ productName: productName, picture: picture, description: description, price: price, categoryId: Number(categoryId), date: new Date() });
     res.json(newProduct);
   } catch (err) {
-    next(err);
+    if (err.name === "SequelizeValidationError") {
+      res.status(401).send("Something is wrong with this form");
+    } else {
+      next(err);
+    }
   }
 });
 

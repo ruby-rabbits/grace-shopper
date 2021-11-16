@@ -32,8 +32,6 @@ class Routes extends Component {
 
   render() {
     const { isLoggedIn, isAdmin } = this.props;
-    // const { isLoggedIn } = this.props;
-    // const isAdmin = true;
 
     return (
       <div className="routes">

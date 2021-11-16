@@ -3,6 +3,8 @@ import axios from 'axios'
 // action types
 const GET_ALL_PRODUCTS = 'GET_ALL_PRODUCTS';
 const CREATE_PRODUCT = 'CREATE_PRODUCT';
+const SET_PRODUCT = 'SET_PRODUCT';
+
 // action creators
 const _createProduct = (product) => {
     return {
@@ -15,6 +17,13 @@ export const fetchProducts = (products) => {
     return {
         type: GET_ALL_PRODUCTS,
         products
+    }
+}
+
+export const setProduct = (product) => {
+    return {
+        type: SET_PRODUCT,
+        product
     }
 }
 
@@ -39,7 +48,7 @@ export const createProduct = (product) => {
             dispatch(_createProduct(created))
         }
         catch(error) {
-            console.log(error);
+        return dispatch(setProduct({error}))
         }
     }
 }
@@ -52,6 +61,9 @@ export default function productsReducer(state = initialState, action) {
 
         case CREATE_PRODUCT:
             return [...state, action.product]
+
+        case SET_PRODUCT:
+      return action.product
 
         default:
             return state
