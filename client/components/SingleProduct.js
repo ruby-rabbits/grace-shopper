@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchSingleProduct } from '../store/singleProduct';
 import { addToCart } from '../store/cart';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export class SingleProduct extends React.Component {
   constructor(props) {
@@ -28,11 +30,13 @@ export class SingleProduct extends React.Component {
         this.props.product.id,
         this.state.quantity
       );
-      alert(
-        `${this.state.quantity} tickets for ${this.props.product.productName} added to cart!`
-      );
+      alert(`${this.state.quantity} tickets for ${this.props.product.productName} added to cart!`)
+      // const successAlert = () => toast(`${this.state.quantity} tickets for ${this.props.product.productName} added to cart!`);
+      // successAlert();
     } catch (e) {
-      alert('error');
+      // const errorAlert = () => toast(`error occurred`);
+      // errorAlert();
+      alert('error')
     }
   };
 
