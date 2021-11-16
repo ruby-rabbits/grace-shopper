@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { addToCart } from '../store/cart';
+// import { addToCart } from '../store/cart';
 import { fetchAllProducts } from '../store/products';
 import ProductCard from './ProductCard';
 
@@ -19,7 +19,7 @@ class AllProducts extends React.Component {
       <div className="all-product-container">
           {products.map((product) => {
             return (
-              <ProductCard userId={this.props.userId} product={product} key={product.id} addToCart={this.props.addToCart}/>
+              <ProductCard userId={this.props.userId} product={product} key={product.id}/>
 
             );
           })}
@@ -39,7 +39,7 @@ const mapDispatch = (dispatch) => {
   // product types come through here
   return {
     fetchAllProducts: () => dispatch(fetchAllProducts()),
-    addToCart: (userId, productId, quantity) => dispatch(addToCart(userId, productId, quantity))
+    // addToCart: (userId, productId, quantity) => dispatch(addToCart(userId, productId, quantity))
   };
 };
 
