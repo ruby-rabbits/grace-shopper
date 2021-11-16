@@ -82,7 +82,6 @@ async function seed() {
     cartProductData.map((cp) => Cart_Product.create(cp))
   );
 
-
   console.log(
     `seeded ${users.length + mockUsers.length} users, ${
       categories.length

@@ -1,11 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { fetchAllCartProducts } from '../store/cart';
+import { checkout, fetchAllCartProducts } from '../store/cart';
 import ProductInCart from './ProductInCart';
 class Cart extends React.Component {
   constructor() {
     super();
+    this.onCheckout = this.onCheckout.bind(this);
+    this.computeTotalPrice = this.computeTotalPrice.bind(this);
+    // this.state = {totalPrice: 0}
   }
 
   componentDidMount() {
@@ -20,27 +22,51 @@ class Cart extends React.Component {
     }
   }
 
+  onCheckout() {
+    this.props.checkoutCart(this.props.userId);
+  }
+
+  computeTotalPrice() {
+    let computedPrice = this.props.cart.reduce((total, product) => {
+      return (total += product.price * product.cart_product.quantity);
+    }, 0);
+    return computedPrice.toFixed(2);
+    // this.setState({totalPrice: computedPrice});
+  }
+
   render() {
     return (
       <div className="cart">
-        <h1>Your Items:</h1>
-        <div>
+        <div className="cart-items">
+          <h1>Your Items</h1>
           {
             //would eventually be this.props.cart.map
             this.props.cart.length === 0
               ? 'Empty Cart'
-              : this.props.cart.map((product) => {
+              : this.props.cart.map((product, indx, arr) => {
                   return (
-                    <ProductInCart userId={this.props.userId} product={product} key={product.id}/>
+                    <React.Fragment key={product.id}>
+                      <ProductInCart
+                        userId={this.props.userId}
+                        product={product}
+                      />
+                      {indx != arr.length - 1 ? <hr /> : null}
+                    </React.Fragment>
                   );
                 })
           }
         </div>
-        <div>
-          <button id="checkout">
-            <Link to="/checkout">Checkout</Link>
-          </button>
-        </div>
+        <section className="checkout">
+          {this.props.cart.length === 0 ? null : (
+            <div>
+              <h2>Total Price: ${this.computeTotalPrice()} </h2>
+              <button className="btn btn-checkout" onClick={this.onCheckout}>
+                CHECKOUT
+                {/* <Link to="/checkout">Checkout</Link> */}
+              </button>
+            </div>
+          )}
+        </section>
       </div>
     );
   }
@@ -55,6 +81,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     getCart: (userId) => {
       dispatch(fetchAllCartProducts(userId));
+    },
+    checkoutCart: (userId) => {
+      dispatch(checkout(userId));
     },
   };
 };

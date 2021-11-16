@@ -38,6 +38,7 @@ router.get("/user/:userId", async (req, res, next) => {
 });
 
 // POST  == > create new cart_product entry
+//Things to pass in: productId and userId
 router.post("/user/:userId", async (req, res, next) => {
   try {
     // find or create the product
@@ -50,9 +51,17 @@ router.post("/user/:userId", async (req, res, next) => {
       },
       defaults: req.body,
     });
-
+    const addProduct = await Product.findByPk(product.productId, {
+      include: {
+        model: Cart_Product,
+          as: 'cart_product',
+        where: {
+          cartId: Number(thisCartId)
+        }
+      }
+    })
     if (created) {
-      res.json(product);
+      res.json(addProduct);
     }
     // if order already exists, update instead
     else {
@@ -66,7 +75,16 @@ router.post("/user/:userId", async (req, res, next) => {
         ...req.body,
         quantity: quant + product.quantity,
       });
-      res.json(updatedProduct);
+      const finalProduct = await Product.findByPk(updatedProduct.productId, {
+        include:{
+          model: Cart_Product,
+          as: 'cart_product',
+        where: {
+          cartId: Number(thisCartId)
+        }
+        }
+      })
+      res.json(finalProduct);
     }
   } catch (err) {
     next(err);
@@ -79,7 +97,7 @@ router.put("/user/:userId/checkout", async (req, res, next) => {
     const cartIdForUser = await User.findByPk(Number(req.params.userId));
     const thisCartId = await cartIdForUser.cartId;
 
-    const updatedCart = await Cart_Product.update(
+    await Cart_Product.update(
       {
         purchased: true,
         purchaseDate: Date.now(),
@@ -91,6 +109,11 @@ router.put("/user/:userId/checkout", async (req, res, next) => {
         },
       }
     );
+    const {products : updatedCart} = await Cart.findByPk(thisCartId, {
+      include: {
+        model: Product,
+      },
+    });
     res.json(updatedCart);
   } catch (err) {
     next(err);
@@ -119,7 +142,7 @@ router.put("/user/:userId/quantity", async (req, res, next) => {
 });
 
 // DELETE /api/orders/:id ==> delete order with id
-router.delete("/user/:userId/", async (req, res, next) => {
+router.delete("/user/:userId/:productId", async (req, res, next) => {
   try {
     const cartIdForUser = await User.findByPk(Number(req.params.userId));
     const thisCartId = await cartIdForUser.cartId;
@@ -127,7 +150,7 @@ router.delete("/user/:userId/", async (req, res, next) => {
     const productToDelete = await Cart_Product.findOne({
       where: {
         cartId: Number(thisCartId),
-        productId: Number(req.body.productId),
+        productId: Number(req.params.productId),
       },
     });
     await productToDelete.destroy();

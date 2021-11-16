@@ -20,6 +20,7 @@ export const fetchProducts = (products) => {
     }
 }
 
+
 export const setProduct = (product) => {
     return {
         type: SET_PRODUCT,
@@ -31,7 +32,7 @@ export const setProduct = (product) => {
 // thunks
 export const fetchAllProducts = () => {
     return async (dispatch) => {
-        try { 
+        try {
             const {data} = await axios.get('/api/products')
             dispatch(fetchProducts(data))
         }
@@ -40,6 +41,7 @@ export const fetchAllProducts = () => {
         }
     }
 }
+
 
 export const createProduct = (product) => {
     return async (dispatch) => {

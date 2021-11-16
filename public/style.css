@@ -1,9 +1,9 @@
 body {
   font-family: sans-serif;
   margin: 0;
+  /* background-image: url(" */
+  font-family: copperplate, fantasy;
 }
-
-
 
 a {
   text-decoration: none;
@@ -14,7 +14,7 @@ label {
 }
 
 nav {
-  background-color: #635F5F;
+  background-color: #104f55;
 }
 
 .all-links {
@@ -24,7 +24,7 @@ nav {
 }
 
 nav h1 {
-  margin: 0
+  margin: 0;
 }
 
 nav a {
@@ -32,21 +32,16 @@ nav a {
   margin: 1em;
   font-weight: bold;
   padding: 8px 16px;
-  color: white
+  color: white;
 }
 
 nav a:hover {
-  color: blue
+  color: blue;
 }
 
 .routes {
-  padding: 2rem 2.5rem
+  padding: 2rem 2.5rem;
 }
-
-/* #cartLink {
-  position: absolute;
-  right: 80px;
-} */
 
 form div {
   margin: 1em;
@@ -54,43 +49,221 @@ form div {
 }
 
 .all-product-container {
-  width: 75%
-}
 
-.all-products {
+  width: 75%;
   display: flex;
   flex-wrap: wrap;
-  margin: 2rem 0;
-  gap: 2rem;
+  gap: 1.5rem 3rem;
 }
 
-.all-products img {
+
+.product-card img {
   width: 10rem;
   height: 12rem;
+  margin: auto;
+  align-self: center;
 }
 
-.product-card {
-  flex-basis: 20%
+.sp-description {
+  box-sizing: border-box;
+
+  padding: 5px 5px;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
 }
+
+.single-product-container {
+  display: flex;
+  justify-content: space-around;
+  color: #104f55;
+}
+
+.single-product img {
+  width: 17rem;
+  height: 24rem;
+}
+
+.img-desc {
+  display: flex;
+  flex-direction: column;
+}
+
+.single-product h2 {
+  size: 20px;
+}
+
+.product-card a {
+  color: black;
+  padding: 1rem;
+}
+.product-card a:hover {
+  color: #2C5FE1;
+  box-shadow: 0 4px 8px 0 rgba(116, 116, 116, 0.2), 0 6px 20px 0 rgba(116, 116, 116, 0.2);
+  border-radius: 10px
+}
+
+
+.product-card {
+  flex-basis: 20%;
+  flex-grow: 0;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* text-align: center; */
+}
+
+
+
+.btn {
+  /* margin: 0 20%; */
+  background-color: #2C5FE1;
+  color: white;
+  border: 2px solid white;
+  border-radius: 10px;
+  padding: 3% 0;
+}
+
+.btn:hover {
+  background-color: white;
+  color: #2C5FE1;
+  border: 2px solid #2C5FE1
+}
+
+/* Single Product */
+
+i.quantity {
+  font-size: 1.2rem;
+  color: gray;
+  margin: 0.5rem;
+}
+
 
 .user{
   display: flex;
-  justify-content: flex-start
+  justify-content: flex-start;
 }
-#checkout {
-  display: inline-block;
-  padding: 0.3em 1.2em;
-  margin: 20px 0px;
-  border-radius: 2em;
-  box-sizing: border-box;
+
+/* Carts */
+
+.cart {
+  display: flex;
+  justify-content: space-between;
+}
+
+.cart-items {
+  flex-basis: 70%;
+  box-shadow: 0 4px 8px 0 rgba(116, 116, 116, 0.2), 0 6px 20px 0 rgba(116, 116, 116, 0.2);
+  border-radius: 10px
+}
+
+.cart-items hr {
+  margin: 2rem;
+  color: gray;
+  opacity: 0.5;
+}
+
+.cart-items h1 {
+  margin: 2rem;
+}
+
+.cart-row{
+  display:flex;
+  margin: 2rem
+}
+
+.cart-row img {
+  width: 8rem;
+  height: 10rem;
+}
+
+.info {
+  flex-grow: 1;
+  display: flex;
+  justify-content: space-between;
+
+  padding: 0 2rem
+}
+
+i.bi-trash {
+  font-size: 1.2rem;
+  color: gray;
+}
+
+button.delete {
+  border: none;
+  /* background-color: red; */
+  color: #635F5F;
+  background-color: white;
+  padding: 0;
+}
+
+button.delete:hover i.bi-trash {
+  color: red
+}
+
+button span {
+  margin-left: 5px;
+}
+
+.row-left{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
+}
+
+.row-left h3 {
+  margin-top: 0;
+  color: #635F5F
+}
+
+.row-left h3:hover{
+  color: #2C5FE1;
+}
+
+/* a#img:hover h3#name {
+  color: #2C5FE1
+} */
+
+.row-right{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-end;
+}
+
+input[name=quantity] {
+  width: 20%;
+  padding: 3%;
+  text-align: end;
+}
+
+
+.checkout {
+  flex-basis: 25%
+}
+
+.checkout div {
+  height: auto;
+  padding: 2rem;
+  box-shadow: 0 4px 8px 0 rgba(116, 116, 116, 0.2), 0 6px 20px 0 rgba(116, 116, 116, 0.2);
+  border-radius: 10px
+}
+
+.checkout h2 {
+  margin-top: 0;
+}
+
+.btn-checkout {
+  display: block;
+  padding: 0.5rem 2rem;
+  margin: auto;
+  margin-top: 2rem;
+  width: 80%;
+}
+
+.btn-checkout a {
   text-decoration: none;
-  font-family: "Roboto", sans-serif;
-  font-weight: 500;
-  color: #ffffff;
-  background-color: #4eb5f1;
-  text-align: center;
-  transition: all 0.2s;
-}
-#checkout:hover {
-  background-color: #463dc5;
 }

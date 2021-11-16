@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+// import { addToCart } from '../store/cart';
 import { fetchAllProducts } from '../store/products';
 import ProductCard from './ProductCard';
 
@@ -11,23 +12,17 @@ class AllProducts extends React.Component {
   }
 
   render() {
+    // console.log(this.props)
     const products = this.props.products;
     // get all product types, map out all product types and display it on landing page
     return (
       <div className="all-product-container">
-        <div className="all-products">
           {products.map((product) => {
             return (
-              <ProductCard product={product} key={product.id} />
+              <ProductCard userId={this.props.userId} product={product} key={product.id}/>
 
-              // <ul key={product.id}>
-              //   <img src={product.picture} />
-              //   <li>{product.productName}</li>
-              //   <li>{product.price}</li>
-              // </ul>
             );
           })}
-        </div>
       </div>
     );
   }
@@ -37,12 +32,14 @@ const mapState = (state) => {
     products: state.products,
     isLoggedIn: !!state.auth.id,
     username: state.auth.username,
+    userId: state.auth.id
   };
 };
 const mapDispatch = (dispatch) => {
   // product types come through here
   return {
     fetchAllProducts: () => dispatch(fetchAllProducts()),
+    // addToCart: (userId, productId, quantity) => dispatch(addToCart(userId, productId, quantity))
   };
 };
 
