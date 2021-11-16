@@ -1,9 +1,9 @@
 body {
   font-family: sans-serif;
   margin: 0;
+  /* background-image: url(" */
+  font-family: copperplate, fantasy;
 }
-
-
 
 a {
   text-decoration: none;
@@ -14,7 +14,7 @@ label {
 }
 
 nav {
-  background-color: #635F5F;
+  background-color: #104f55;
 }
 
 .all-links {
@@ -24,7 +24,7 @@ nav {
 }
 
 nav h1 {
-  margin: 0
+  margin: 0;
 }
 
 nav a {
@@ -32,15 +32,15 @@ nav a {
   margin: 1em;
   font-weight: bold;
   padding: 8px 16px;
-  color: white
+  color: white;
 }
 
 nav a:hover {
-  color: blue
+  color: blue;
 }
 
 .routes {
-  padding: 2rem 2.5rem
+  padding: 2rem 2.5rem;
 }
 
 form div {
@@ -49,7 +49,10 @@ form div {
 }
 
 .all-product-container {
-  width: 80%;
+
+  width: 75%;
+}
+
   display: flex;
   flex-wrap: wrap;
   gap: 1.5rem 3rem;
@@ -61,6 +64,35 @@ form div {
   height: 12rem;
   margin: auto;
   align-self: center;
+}
+
+.sp-description {
+  box-sizing: border-box;
+
+  padding: 5px 5px;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.single-product-container {
+  display: flex;
+  justify-content: space-around;
+  color: #104f55;
+}
+
+.single-product img {
+  width: 17rem;
+  height: 24rem;
+}
+
+.img-desc {
+  display: flex;
+  flex-direction: column;
+}
+
+.single-product h2 {
+  size: 20px;
 }
 
 .product-card a {
@@ -112,7 +144,7 @@ i.quantity {
 
 .user{
   display: flex;
-  justify-content: flex-start
+  justify-content: flex-start;
 }
 
 /* Carts */

@@ -8,13 +8,12 @@ export class SingleProduct extends React.Component {
   constructor(props) {
     super(props);
     this.state = { quantity: 1 };
-  }
 
   componentDidMount() {
     this.props.getSingleProduct(this.props.match.params.productId);
   }
-
-  onClickQuantity = (e) => {
+    
+     onClickQuantity = (e) => {
     let newQuant;
     if (e.target.id === 'inc') newQuant = this.state.quantity + 1;
     else newQuant = this.state.quantity - 1;
@@ -30,36 +29,43 @@ export class SingleProduct extends React.Component {
     }
   };
 
+
   render() {
     const product = this.props.product;
     return (
       <div>
-        <ul>
-          <img src={product.picture} />
-          <li>{product.productName}</li>
-          <li>{product.description}</li>
-          <li>{product.price}</li>
-        </ul>
+        <div className="single-product-container">
+          <div className="img-desc">
+            <img className="single-product" src={product.picture} />
+            <p className="single-product">{product.description}</p>
+          </div>
 
-        <i
-          className="bi bi-dash-circle quantity"
-          id="ded"
-          onClick={this.onClickQuantity}
-        ></i>
-        <span>{this.state.quantity}</span>
-        <i
-          className="bi bi-plus-circle quantity"
-          id="inc"
-          onClick={this.onClickQuantity}
-        ></i>
+          <div className="sp-description">
+            <h2 className="single-product">{product.productName}</h2>
 
-        <button
-          type="button"
-          className="btn add-btn"
-          onClick={this.onClickAddCart}
-        >
-          Add To Cart
-        </button>
+            <p className="single-product">${product.price}</p>
+             <i
+              className="bi bi-dash-circle quantity"
+              id="ded"
+              onClick={this.onClickQuantity}
+            ></i>
+            <span>{this.state.quantity}</span>
+            <i
+              className="bi bi-plus-circle quantity"
+              id="inc"
+              onClick={this.onClickQuantity}
+            ></i>
+
+            <button
+              type="button"
+              className="btn add-btn"
+              onClick={this.onClickAddCart}
+            >
+            Add To Cart
+            </button>
+    
+          </div>
+    
         {/* This is a link back to the home page (All Products) */}
         <Link to="/">
           <h2>Back to All Products</h2>
@@ -73,6 +79,7 @@ const mapState = (state) => {
   return {
     product: state.singleProduct,
     userId: state.auth.id,
+
   };
 };
 
@@ -81,6 +88,7 @@ const mapDispatch = (dispatch) => {
     getSingleProduct: (id) => dispatch(fetchSingleProduct(id)),
     addToCart: (userId, productId, quantity) =>
       dispatch(addToCart(userId, productId, quantity)),
+
   };
 };
 export default connect(mapState, mapDispatch)(SingleProduct);

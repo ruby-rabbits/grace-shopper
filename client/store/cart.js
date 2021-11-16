@@ -7,9 +7,9 @@ const GET_CART_PRODUCTS = "GET_CART_PRODUCTS";
 const CHANGE_QUANTITY = "CHANGE_QUANTITY";
 const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 
-const ADD_TO_CART = 'ADD_TO_CART'
-const CLEAR_CART = 'CLEAR_CART';
-const CHECKOUT = 'CKECKOUT';
+const ADD_TO_CART = "ADD_TO_CART";
+const CLEAR_CART = "CLEAR_CART";
+const CHECKOUT = "CKECKOUT";
 
 // action creators
 //get all products user put in cart
@@ -46,16 +46,16 @@ export const clearCart = () => {
 const _checkout = (products) => {
   return {
     type: CHECKOUT,
-    products
-  }
-}
+    products,
+  };
+};
 
 export const _addToCart = (product) => {
   return {
-      type: ADD_TO_CART,
-      product
-  }
-}
+    type: ADD_TO_CART,
+    product,
+  };
+};
 
 // thunks
 export const fetchAllCartProducts = (userId) => {
@@ -83,7 +83,6 @@ export const changeQuantity = ({ userId, quantity, productId }) => {
   };
 };
 
-
 export const removeItem = ({ userId, productId }) => {
   return async (dispatch) => {
     try {
@@ -101,26 +100,27 @@ export const removeItem = ({ userId, productId }) => {
 export const checkout = (userId) => {
   return async (dispatch) => {
     try {
-      const {data} = await axios.put(`/api/cart/user/${userId}/checkout`);
+      const { data } = await axios.put(`/api/cart/user/${userId}/checkout`);
       dispatch(_checkout(data));
-
-    } catch(error){
-      console.log('error in checkout thunk', error);
+    } catch (error) {
+      console.log("error in checkout thunk", error);
     }
-  }
-}
+  };
+};
 
 export const addToCart = (userId, productId, quantity) => {
   return async (dispatch) => {
-      try {
-          const {data} = await axios.post(`/api/cart/user/${userId}`,{productId, quantity})
-          dispatch(_addToCart(data))
-      }
-      catch(error) {
-          console.log(error)
-      }
-  }
-}
+    try {
+      const { data } = await axios.post(`/api/cart/user/${userId}`, {
+        productId,
+        quantity,
+      });
+      dispatch(_addToCart(data));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+};
 
 // reducer
 const initialState = [];
@@ -129,21 +129,23 @@ export default function cartsReducer(state = initialState, action) {
     case GET_CART_PRODUCTS:
       return action.products;
     case CHANGE_QUANTITY:
-      return state.map(product => {
-        if (product.id === action.updatedProduct.productId) product.cart_product = action.updatedProduct;
-        return product
-      })
-      case ADD_TO_CART:
-        action.product.cart_product = action.product.cart_product[0]
-        return [...state.filter((product) => (
-          product.id !== action.product.id
-        )), action.product]
+      return state.map((product) => {
+        if (product.id === action.updatedProduct.productId)
+          product.cart_product = action.updatedProduct;
+        return product;
+      });
+    case ADD_TO_CART:
+      action.product.cart_product = action.product.cart_product[0];
+      return [
+        ...state.filter((product) => product.id !== action.product.id),
+        action.product,
+      ];
 
     case REMOVE_FROM_CART:
       return state.filter((product) => product.id !== action.product.productId);
 
     case CHECKOUT:
-      return action.products
+      return action.products;
 
     case CLEAR_CART:
       return [];
