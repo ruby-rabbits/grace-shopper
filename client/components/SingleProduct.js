@@ -8,12 +8,13 @@ export class SingleProduct extends React.Component {
   constructor(props) {
     super(props);
     this.state = { quantity: 1 };
+  }
 
   componentDidMount() {
     this.props.getSingleProduct(this.props.match.params.productId);
   }
-    
-     onClickQuantity = (e) => {
+
+  onClickQuantity = (e) => {
     let newQuant;
     if (e.target.id === 'inc') newQuant = this.state.quantity + 1;
     else newQuant = this.state.quantity - 1;
@@ -22,13 +23,18 @@ export class SingleProduct extends React.Component {
 
   onClickAddCart = () => {
     try {
-      this.props.addToCart(this.props.userId, this.props.product.id, this.state.quantity);
-      alert(`${this.state.quantity} tickets for ${this.props.product.productName} added to cart!`);
+      this.props.addToCart(
+        this.props.userId,
+        this.props.product.id,
+        this.state.quantity
+      );
+      alert(
+        `${this.state.quantity} tickets for ${this.props.product.productName} added to cart!`
+      );
     } catch (e) {
       alert('error');
     }
   };
-
 
   render() {
     const product = this.props.product;
@@ -44,7 +50,7 @@ export class SingleProduct extends React.Component {
             <h2 className="single-product">{product.productName}</h2>
 
             <p className="single-product">${product.price}</p>
-             <i
+            <i
               className="bi bi-dash-circle quantity"
               id="ded"
               onClick={this.onClickQuantity}
@@ -61,15 +67,15 @@ export class SingleProduct extends React.Component {
               className="btn add-btn"
               onClick={this.onClickAddCart}
             >
-            Add To Cart
+              Add To Cart
             </button>
-    
           </div>
-    
-        {/* This is a link back to the home page (All Products) */}
-        <Link to="/">
-          <h2>Back to All Products</h2>
-        </Link>
+
+          {/* This is a link back to the home page (All Products) */}
+          <Link to="/">
+            <h2>Back to All Products</h2>
+          </Link>
+        </div>
       </div>
     );
   }
@@ -79,7 +85,6 @@ const mapState = (state) => {
   return {
     product: state.singleProduct,
     userId: state.auth.id,
-
   };
 };
 
@@ -88,7 +93,6 @@ const mapDispatch = (dispatch) => {
     getSingleProduct: (id) => dispatch(fetchSingleProduct(id)),
     addToCart: (userId, productId, quantity) =>
       dispatch(addToCart(userId, productId, quantity)),
-
   };
 };
 export default connect(mapState, mapDispatch)(SingleProduct);
