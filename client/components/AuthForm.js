@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import { useHistory } from 'react-router'
 import {authenticate} from '../store'
 
 /**
@@ -7,10 +8,16 @@ import {authenticate} from '../store'
  */
 const AuthForm = props => {
   const {name, displayName, handleSubmit, error} = props
+  let history = useHistory();
+
+  const handleSubmitRedirect = (evt) => {
+    handleSubmit(evt);
+    history.push('/');
+  }
 
   return (
     <div>
-      <form onSubmit={handleSubmit} name={name}>
+      <form onSubmit={handleSubmitRedirect} name={name}>
         <div>
           <label htmlFor="username">
             <small>Username</small>
@@ -62,7 +69,8 @@ const mapDispatch = dispatch => {
       const formName = evt.target.name
       const username = evt.target.username.value
       const password = evt.target.password.value
-      dispatch(authenticate(username, password, formName))
+      dispatch(authenticate(username, password, formName));
+
     }
   }
 }

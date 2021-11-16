@@ -1,7 +1,5 @@
-
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { checkout, fetchAllCartProducts } from '../store/cart';
 import ProductInCart from './ProductInCart';
 class Cart extends React.Component {
@@ -30,8 +28,8 @@ class Cart extends React.Component {
 
   computeTotalPrice() {
     let computedPrice = this.props.cart.reduce((total, product) => {
-      return (total += (product.price * product.cart_product.quantity));
-    },0);
+      return (total += product.price * product.cart_product.quantity);
+    }, 0);
     return computedPrice.toFixed(2);
     // this.setState({totalPrice: computedPrice});
   }
@@ -39,33 +37,36 @@ class Cart extends React.Component {
   render() {
     return (
       <div className="cart">
-        <h1>Your Items:</h1>
-        <div>
+        <div className="cart-items">
+          <h1>Your Items</h1>
           {
             //would eventually be this.props.cart.map
             this.props.cart.length === 0
-              ? "Empty Cart"
-              : this.props.cart.map((product) => {
+              ? 'Empty Cart'
+              : this.props.cart.map((product, indx, arr) => {
                   return (
-                    <ProductInCart
-                      userId={this.props.userId}
-                      product={product}
-                      key={product.id}
-                    />
+                    <React.Fragment key={product.id}>
+                      <ProductInCart
+                        userId={this.props.userId}
+                        product={product}
+                      />
+                      {indx != arr.length - 1 ? <hr /> : null}
+                    </React.Fragment>
                   );
                 })
           }
         </div>
-        <div>
+        <section className="checkout">
           {this.props.cart.length === 0 ? null : (
-            <React.Fragment>
-              <h2>Total Price: {this.computeTotalPrice()} </h2>
-              <button id="checkout" onClick={this.onCheckout}>
-                <Link to="/checkout">Checkout</Link>
+            <div>
+              <h2>Total Price: ${this.computeTotalPrice()} </h2>
+              <button className="btn btn-checkout" onClick={this.onCheckout}>
+                CHECKOUT
+                {/* <Link to="/checkout">Checkout</Link> */}
               </button>
-            </React.Fragment>
+            </div>
           )}
-        </div>
+        </section>
       </div>
     );
   }
