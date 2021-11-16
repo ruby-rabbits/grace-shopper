@@ -2,12 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { checkout, fetchAllCartProducts } from '../store/cart';
 import ProductInCart from './ProductInCart';
+import { Link } from 'react-router-dom';
 class Cart extends React.Component {
   constructor() {
     super();
     this.onCheckout = this.onCheckout.bind(this);
     this.computeTotalPrice = this.computeTotalPrice.bind(this);
-    // this.state = {totalPrice: 0}
   }
 
   componentDidMount() {
@@ -31,7 +31,6 @@ class Cart extends React.Component {
       return (total += product.price * product.cart_product.quantity);
     }, 0);
     return computedPrice.toFixed(2);
-    // this.setState({totalPrice: computedPrice});
   }
 
   render() {
@@ -60,10 +59,11 @@ class Cart extends React.Component {
           {this.props.cart.length === 0 ? null : (
             <div>
               <h2>Total Price: ${this.computeTotalPrice()} </h2>
+              <Link to='/checkout'>
               <button className="btn btn-checkout" onClick={this.onCheckout}>
                 CHECKOUT
-                {/* <Link to="/checkout">Checkout</Link> */}
               </button>
+              </Link>
             </div>
           )}
         </section>
