@@ -5,13 +5,19 @@ import { addToCart } from '../store/products';
 function ProductCard(props) {
   let product = props.product;
   return (
-  <div>
-    <Link to={`/products/${product.id}`} className="product-card">
-      <img src={product.picture} />
-      <p>Name: {product.productName}</p>
-      <p>Price: {product.price}</p>
-    </Link>
-    <button type="button" onClick={() => props.addToCart(props.userId, product.id, 1)} >Add To Cart</button>
+    <div className="product-card">
+      <Link to={`/products/${product.id}`} >
+        <img src={product.picture} />
+        <h4>{product.productName}</h4>
+        <p>${product.price}</p>
+      </Link>
+        {/* <button
+          type="button"
+          className="btn add-btn"
+          onClick={() => props.addToCart(props.userId, product.id, 1)}
+        >
+          Add To Cart
+        </button> */}
     </div>
   );
 }

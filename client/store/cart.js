@@ -147,8 +147,8 @@ export default function cartsReducer(state = initialState, action) {
     case CHECKOUT:
       return action.products;
 
-    // case CLEAR_CART:
-    //   return [];
+    case CLEAR_CART:
+      return [];
     default:
       return state;
   }

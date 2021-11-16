@@ -75,7 +75,6 @@ router.post("/user/:userId", async (req, res, next) => {
         ...req.body,
         quantity: quant + product.quantity,
       });
-      console.log('updated Product' , updatedProduct)
       const finalProduct = await Product.findByPk(updatedProduct.productId, {
         include:{
           model: Cart_Product,
