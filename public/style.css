@@ -51,8 +51,6 @@ form div {
 .all-product-container {
 
   width: 75%;
-}
-
   display: flex;
   flex-wrap: wrap;
   gap: 1.5rem 3rem;
