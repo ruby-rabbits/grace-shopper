@@ -17,6 +17,8 @@ const setAuth = auth => ({type: SET_AUTH, auth})
  * THUNK CREATORS
  */
 export const me = () => async dispatch => {
+  // JOE_CR: Reference this function to see how the client (front-end) makes an authenticated
+  // request to the server.
   const token = window.localStorage.getItem(TOKEN)
   if (token) {
     const res = await axios.get('/auth/me', {

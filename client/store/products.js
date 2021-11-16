@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+// JOE_CR: This file has some strange formatting. Is everyone using their auto-formatters?
+
 // action types
 const GET_ALL_PRODUCTS = 'GET_ALL_PRODUCTS';
 const CREATE_PRODUCT = 'CREATE_PRODUCT';

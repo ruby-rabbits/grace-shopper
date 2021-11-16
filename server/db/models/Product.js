@@ -12,6 +12,7 @@ const Product = db.define("product", {
   },
   description: {
     type: Sequelize.TEXT,
+    // JOE_CR: Indeed.
     defaultValue: "This is a ticket.",
   },
   price: {
@@ -22,6 +23,7 @@ const Product = db.define("product", {
       notEmpty: true,
     },
   },
+  // JOE_CR: What is this date column for? Could the included `createdAt` or `updatedAt` timestamps be used instead?
   date: {
     type: Sequelize.DATE,
     defaultValue: new Date(),
@@ -30,6 +32,7 @@ const Product = db.define("product", {
       notEmpty: true,
     },
   },
+  // JOE_CR: I think using Sequelize.STRING will limit this column to 255 characters, which for URLs is sometimes not long enough.
   picture: {
     type: Sequelize.STRING,
     defaultValue:

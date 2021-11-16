@@ -58,6 +58,14 @@ export const _addToCart = (product) => {
 };
 
 // thunks
+
+// JOE_CR: So often in this file you have to pipe your userId through,
+// but there are two things to consider.
+// 1) You can get the userId of the logged-in user by receiving another argument to your dispatched function,
+// aka async (dispatch, getState) --> this getState lets you access the Redux state and the auth key to get the
+// logged in user.
+// 2) You can rely on the server knowing who is logged in already if you send the token in localStorage up as a header
+// in the request.
 export const fetchAllCartProducts = (userId) => {
   return async (dispatch) => {
     try {

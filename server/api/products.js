@@ -2,6 +2,7 @@ const router = require("express").Router();
 const {
   models: { Product, Cart },
 } = require("../db");
+// JOE_CR: Unused var! Are you using a linter?
 const Cart_Product = require("../db/models/Cart_Product");
 module.exports = router;
 
@@ -46,9 +47,12 @@ router.get("/:id", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   try {
     const { productName, picture, description, price, categoryId } = req.body;
+    // JOE_CR: This is a very horizontal line. Consider adding line breaks and using enhanced object literal syntax for readability!
     const newProduct = await Product.create({ productName: productName, picture: picture, description: description, price: price, categoryId: Number(categoryId), date: new Date() });
     res.json(newProduct);
   } catch (err) {
+    // JOE_CR: This is cool, but you're also swallowing your error details here. At least console.error(err) to see
+    // _why_ this is a SequelizeValidationError and its details.
     if (err.name === "SequelizeValidationError") {
       res.status(401).send("Something is wrong with this form");
     } else {
