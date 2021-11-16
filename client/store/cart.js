@@ -7,6 +7,7 @@ const GET_CART_PRODUCTS = "GET_CART_PRODUCTS";
 const CHANGE_QUANTITY = "CHANGE_QUANTITY";
 const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 
+const ADD_TO_CART = 'ADD_TO_CART'
 const CLEAR_CART = 'CLEAR_CART';
 const CHECKOUT = 'CKECKOUT';
 
@@ -49,7 +50,12 @@ const _checkout = (products) => {
   }
 }
 
-// const
+export const _addToCart = (product) => {
+  return {
+      type: ADD_TO_CART,
+      product
+  }
+}
 
 // thunks
 export const fetchAllCartProducts = (userId) => {
@@ -104,6 +110,17 @@ export const checkout = (userId) => {
   }
 }
 
+export const addToCart = (userId, productId, quantity) => {
+  return async (dispatch) => {
+      try {
+          const {data} = await axios.post(`/api/cart/user/${userId}`,{productId, quantity})
+          dispatch(_addToCart(data))
+      }
+      catch(error) {
+          console.log(error)
+      }
+  }
+}
 
 // reducer
 const initialState = [];
@@ -112,11 +129,16 @@ export default function cartsReducer(state = initialState, action) {
     case GET_CART_PRODUCTS:
       return action.products;
     case CHANGE_QUANTITY:
-      return state.map((product) => {
-        if (product.id === action.updatedProduct.productId)
-          product.cart_product = action.updatedProduct;
-        return product;
-      });
+      return state.map(product => {
+        if (product.id === action.updatedProduct.productId) product.cart_product = action.updatedProduct;
+        return product
+      })
+      case ADD_TO_CART:
+        action.product.cart_product = action.product.cart_product[0]
+        return [...state.filter((product) => (
+          product.id !== action.product.id
+        )), action.product]
+
     case REMOVE_FROM_CART:
       return state.filter((product) => product.id !== action.product.productId);
 

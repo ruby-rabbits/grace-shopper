@@ -17,6 +17,7 @@ async function seed() {
   const users = await Promise.all([
     User.create({ username: 'cody', password: '123' }),
     User.create({ username: 'murphy', password: '123' }),
+    console.log(Object.getPrototypeOf(User))
   ]);
 
   const categories = await Promise.all([
