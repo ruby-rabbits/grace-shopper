@@ -9,10 +9,12 @@ export const fetchProducts = (products) => {
         products
     }
 }
+
+
 // thunks
 export const fetchAllProducts = () => {
     return async (dispatch) => {
-        try { 
+        try {
             const {data} = await axios.get('/api/products')
             dispatch(fetchProducts(data))
         }
@@ -21,6 +23,7 @@ export const fetchAllProducts = () => {
         }
     }
 }
+
 // reducer
 const initialState = [];
 export default function productsReducer(state = initialState, action) {
