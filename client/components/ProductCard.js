@@ -8,16 +8,16 @@ function ProductCard(props) {
     <div className="product-card">
       <Link to={`/products/${product.id}`} >
         <img src={product.picture} />
-        <p>{product.productName}</p>
+        <h4>{product.productName}</h4>
         <p>${product.price}</p>
       </Link>
-        <button
+        {/* <button
           type="button"
           className="btn add-btn"
           onClick={() => props.addToCart(props.userId, product.id, 1)}
         >
           Add To Cart
-        </button>
+        </button> */}
     </div>
   );
 }

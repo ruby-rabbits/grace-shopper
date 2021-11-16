@@ -52,14 +52,27 @@ form div {
   width: 80%;
   display: flex;
   flex-wrap: wrap;
-  gap: 2.5rem;
+  gap: 1.5rem 3rem;
 }
 
 
 .product-card img {
   width: 10rem;
   height: 12rem;
+  margin: auto;
+  align-self: center;
 }
+
+.product-card a {
+  color: black;
+  padding: 1rem;
+}
+.product-card a:hover {
+  color: #2C5FE1;
+  box-shadow: 0 4px 8px 0 rgba(116, 116, 116, 0.2), 0 6px 20px 0 rgba(116, 116, 116, 0.2);
+  border-radius: 10px
+}
+
 
 .product-card {
   flex-basis: 20%;
@@ -68,9 +81,10 @@ form div {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
   /* text-align: center; */
 }
+
+
 
 .btn {
   /* margin: 0 20%; */
@@ -85,6 +99,14 @@ form div {
   background-color: white;
   color: #2C5FE1;
   border: 2px solid #2C5FE1
+}
+
+/* Single Product */
+
+i.quantity {
+  font-size: 1.2rem;
+  color: gray;
+  margin: 0.5rem;
 }
 
 
