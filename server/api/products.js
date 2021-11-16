@@ -31,7 +31,8 @@ router.get("/:id", async (req, res, next) => {
 // POST /api/products == > create new product row
 router.post("/", async (req, res, next) => {
   try {
-    const newProduct = await Product.create(req.body);
+    const { productName, picture, description, price, categoryId } = req.body;
+    const newProduct = await Product.create({ productName: productName, picture: picture, description: description, price: price, categoryId: Number(categoryId), date: new Date() });
     res.json(newProduct);
   } catch (err) {
     next(err);

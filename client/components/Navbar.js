@@ -4,43 +4,37 @@ import { Link } from 'react-router-dom';
 import { logout } from '../store';
 import { clearCart } from '../store/cart';
 
-const Navbar = ({ handleClick, isLoggedIn }) => (
+const Navbar = ({ handleClick, isLoggedIn, isAdmin }) => (
   <div className="nav-bar">
     {/* <h1 style={{paddingLeft: '2.5rem'}}>Welcome to Show Shopper!</h1> */}
     <nav>
-      {isLoggedIn ? (
-        <div className="all-links" style={{ paddingLeft: '2.5rem' }}>
+    <div className="all-links" style={{ paddingLeft: '2.5rem' }}>
           {/* The navbar will show these links after you log in */}
           <Link to="/" style={{ paddingLeft: '0', marginLeft: '0' }}>
             <h1>ShowShopper</h1>
           </Link>
           {/* this link would go to user account info once it exists */}
           <div className="right-links">
-            <Link to="/myAccount">My Account</Link>
+      {isAdmin ? ( 
+        <Link to="/admin">Admin Panel</Link>
+      ) : (<span></span>)}
+      {isLoggedIn ? (
+            <span><Link to="/myAccount">My Account</Link>
             <a href="#" onClick={handleClick}>
               Logout
             </a>
             <Link id="cartLink" to="/cart">
               Cart
-            </Link>
-          </div>
-        </div>
+            </Link></span>
       ) : (
-        <div className="all-links" style={{ paddingLeft: '2.5rem' }}>
-          <Link to="/" style={{ paddingLeft: '0', marginLeft: '0' }}>
-            <h1>ShowShopper</h1>
-          </Link>
-          {/* how to get these to the right?*/}
-          {/* The navbar will show these links before you log in */}
-          <div className="right-links">
-            <Link to="/login">Login</Link>
+            <span><Link to="/login">Login</Link>
             <Link to="/signup">Sign Up</Link>
             <Link id="cartLink" to="/cart">
               Cart
-            </Link>
-          </div>
-        </div>
+            </Link></span>
       )}
+                </div>
+        </div>
     </nav>
   </div>
 );
@@ -51,6 +45,7 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
 const mapState = (state) => {
   return {
     isLoggedIn: !!state.auth.id,
+    isAdmin: !!state.auth.isAdmin,
   };
 };
 

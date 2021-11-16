@@ -2,13 +2,23 @@ import axios from 'axios'
 
 // action types
 const GET_ALL_PRODUCTS = 'GET_ALL_PRODUCTS';
+const CREATE_PRODUCT = 'CREATE_PRODUCT';
 // action creators
+const _createProduct = (product) => {
+    return {
+      type: CREATE_PRODUCT,
+      product
+    };
+  };
+
 export const fetchProducts = (products) => {
     return {
         type: GET_ALL_PRODUCTS,
         products
     }
 }
+
+
 // thunks
 export const fetchAllProducts = () => {
     return async (dispatch) => {
@@ -21,12 +31,28 @@ export const fetchAllProducts = () => {
         }
     }
 }
+
+export const createProduct = (product) => {
+    return async (dispatch) => {
+        try { 
+            const {data: created } = await axios.post('/api/products', product)
+            dispatch(_createProduct(created))
+        }
+        catch(error) {
+            console.log(error);
+        }
+    }
+}
 // reducer
 const initialState = [];
 export default function productsReducer(state = initialState, action) {
     switch(action.type) {
         case GET_ALL_PRODUCTS:
             return action.products
+
+        case CREATE_PRODUCT:
+            return [...state, action.product]
+
         default:
             return state
     }
