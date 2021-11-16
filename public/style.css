@@ -1,9 +1,8 @@
 body {
   font-family: sans-serif;
   margin: 0;
+  background-color: #f2f7f4;
 }
-
-
 
 a {
   text-decoration: none;
@@ -14,7 +13,7 @@ label {
 }
 
 nav {
-  background-color: #635F5F;
+  background-color: #104f55;
 }
 
 .all-links {
@@ -24,7 +23,7 @@ nav {
 }
 
 nav h1 {
-  margin: 0
+  margin: 0;
 }
 
 nav a {
@@ -32,15 +31,15 @@ nav a {
   margin: 1em;
   font-weight: bold;
   padding: 8px 16px;
-  color: white
+  color: white;
 }
 
 nav a:hover {
-  color: blue
+  color: blue;
 }
 
 .routes {
-  padding: 2rem 2.5rem
+  padding: 2rem 2.5rem;
 }
 
 /* #cartLink {
@@ -54,7 +53,7 @@ form div {
 }
 
 .all-product-container {
-  width: 75%
+  width: 75%;
 }
 
 .all-products {
@@ -69,13 +68,28 @@ form div {
   height: 12rem;
 }
 
-.product-card {
-  flex-basis: 20%
+.single-product {
+  display: flex;
+  flex-direction: column;
+  margin: 2rem;
 }
 
-.user{
+.single-product img {
+  width: 20rem;
+  height: 24rem;
+}
+
+.single-product h2 {
+  size: 20px;
+}
+
+.product-card {
+  flex-basis: 20%;
+}
+
+.user {
   display: flex;
-  justify-content: flex-start
+  justify-content: flex-start;
 }
 #checkout {
   display: inline-block;
