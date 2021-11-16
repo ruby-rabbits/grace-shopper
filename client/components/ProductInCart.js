@@ -1,6 +1,6 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { changeQuantity } from '../store/cart';
+import React from "react";
+import { connect } from "react-redux";
+import { changeQuantity, removeItem } from "../store/cart";
 
 class ProductInCart extends React.Component {
   constructor(props) {
@@ -23,7 +23,7 @@ class ProductInCart extends React.Component {
       <div>
         <h3>{product.productName}</h3>
         <img
-          style={{ width: '10rem', height: '13rem' }}
+          style={{ width: "10rem", height: "13rem" }}
           src={product.picture}
         ></img>
         <div>
@@ -40,7 +40,19 @@ class ProductInCart extends React.Component {
           <p>Price: {price}</p>
           {/* For testing purposes */}
         </div>
-        <button style={{ backgroundColor: 'red' }}>Remove</button>
+        <button
+          style={{ backgroundColor: "red" }}
+          className="delete"
+          type="submit"
+          onClick={() => {
+            const { userId, product } = this.props;
+            const productId = product.id;
+            console.log(this.props);
+            this.props.remFromCart({ userId, productId });
+          }}
+        >
+          Remove
+        </button>
       </div>
     );
   }
@@ -49,6 +61,7 @@ class ProductInCart extends React.Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     changeQuantity: (data) => dispatch(changeQuantity(data)),
+    remFromCart: (data) => dispatch(removeItem(data)),
   };
 };
 

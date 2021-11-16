@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -43,7 +44,7 @@ class Cart extends React.Component {
           {
             //would eventually be this.props.cart.map
             this.props.cart.length === 0
-              ? 'Empty Cart'
+              ? "Empty Cart"
               : this.props.cart.map((product) => {
                   return (
                     <ProductInCart
