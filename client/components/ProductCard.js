@@ -11,13 +11,6 @@ function ProductCard(props) {
         <h4>{product.productName}</h4>
         <p>${product.price}</p>
       </Link>
-        {/* <button
-          type="button"
-          className="btn add-btn"
-          onClick={() => props.addToCart(props.userId, product.id, 1)}
-        >
-          Add To Cart
-        </button> */}
     </div>
   );
 }

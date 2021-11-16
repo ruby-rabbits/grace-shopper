@@ -41,7 +41,7 @@ class Cart extends React.Component {
           {
             //would eventually be this.props.cart.map
             this.props.cart.length === 0
-              ? 'Empty Cart'
+              ? <p style={{margin:'2rem'}}>Empty Cart</p>
               : this.props.cart.map((product, indx, arr) => {
                   return (
                     <React.Fragment key={product.id}>

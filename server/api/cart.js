@@ -48,6 +48,7 @@ router.post("/user/:userId", async (req, res, next) => {
       where: {
         cartId: Number(thisCartId),
         productId: Number(req.body.productId),
+        // purchased: false
       },
       defaults: req.body,
     });

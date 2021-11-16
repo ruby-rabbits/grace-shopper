@@ -39,28 +39,38 @@ export class SingleProduct extends React.Component {
   render() {
     const product = this.props.product;
     return (
-      <div>
-        <div className="single-product-container">
-          <div className="img-desc">
-            <img className="single-product" src={product.picture} />
-            <p className="single-product">{product.description}</p>
-          </div>
+      <div className="single-product-container">
+        <div className="img-desc">
+          <img className="single-product" src={product.picture} />
+          <p className="single-product">{product.description}</p>
+        </div>
 
-          <div className="sp-description">
-            <h2 className="single-product">{product.productName}</h2>
+        <div className="sp-description">
+          <h2 className="single-product">{product.productName}</h2>
 
+          <section
+            style={{
+              width: 'auto',
+              margin: '0 auto',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
             <p className="single-product">${product.price}</p>
-            <i
-              className="bi bi-dash-circle quantity"
-              id="ded"
-              onClick={this.onClickQuantity}
-            ></i>
-            <span>{this.state.quantity}</span>
-            <i
-              className="bi bi-plus-circle quantity"
-              id="inc"
-              onClick={this.onClickQuantity}
-            ></i>
+            <section>
+              <i
+                className="bi bi-dash-circle quantity"
+                id="ded"
+                onClick={this.onClickQuantity}
+              ></i>
+              <span>{this.state.quantity}</span>
+              <i
+                className="bi bi-plus-circle quantity"
+                id="inc"
+                onClick={this.onClickQuantity}
+              ></i>
+            </section>
 
             <button
               type="button"
@@ -69,12 +79,11 @@ export class SingleProduct extends React.Component {
             >
               Add To Cart
             </button>
-          </div>
-
-          {/* This is a link back to the home page (All Products) */}
-          <Link to="/">
-            <h2>Back to All Products</h2>
-          </Link>
+            {/* This is a link back to the home page (All Products) */}
+            <Link to="/">
+              <h3>Back to All Products</h3>
+            </Link>
+          </section>
         </div>
       </div>
     );
