@@ -24,19 +24,26 @@ export class SingleProduct extends React.Component {
   };
 
   onClickAddCart = () => {
+    const toastEmitter = {
+      position: 'top-right',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    };
     try {
       this.props.addToCart(
         this.props.userId,
         this.props.product.id,
         this.state.quantity
       );
-      alert(`${this.state.quantity} tickets for ${this.props.product.productName} added to cart!`)
-      // const successAlert = () => toast(`${this.state.quantity} tickets for ${this.props.product.productName} added to cart!`);
-      // successAlert();
+      const successAlert = () => toast(`${this.state.quantity} tickets for ${this.props.product.productName} added to cart!`, toastEmitter);
+      successAlert();
     } catch (e) {
-      // const errorAlert = () => toast(`error occurred`);
-      // errorAlert();
-      alert('error')
+      const errorAlert = () => toast(`error occurred`, toastEmitter);
+      errorAlert();
     }
   };
 
@@ -83,6 +90,7 @@ export class SingleProduct extends React.Component {
             >
               Add To Cart
             </button>
+            <ToastContainer />
             {/* This is a link back to the home page (All Products) */}
             <Link to="/">
               <h3>Back to All Products</h3>
