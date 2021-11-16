@@ -13,11 +13,17 @@ export class SingleProduct extends React.Component {
     // console.log(this.props)
     return (
       <div>
-        <div className="single-product">
-          <img className="single-product" src={product.picture} />
-          <h2 className="single-product">{product.productName}</h2>
-          <div className="single-product">{product.description}</div>
-          <div className="single-product">{product.price}</div>
+        <div className="single-product-container">
+          <div className="img-desc">
+            <img className="single-product" src={product.picture} />
+            <p className="single-product">{product.description}</p>
+          </div>
+
+          <div className="sp-description">
+            <h2 className="single-product">{product.productName}</h2>
+
+            <p className="single-product">${product.price}</p>
+          </div>
         </div>
         More stuff can go here! (Maybe an addToCart? Or a quantity they want to
         purchase in the format of a form/submit?)

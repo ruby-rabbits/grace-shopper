@@ -1,7 +1,8 @@
 body {
   font-family: sans-serif;
   margin: 0;
-  background-color: #f2f7f4;
+  /* background-image: url(" */
+  font-family: copperplate, fantasy;
 }
 
 a {
@@ -68,15 +69,29 @@ form div {
   height: 12rem;
 }
 
-.single-product {
-  display: flex;
+.sp-description {
+  box-sizing: border-box;
+
+  padding: 5px 5px;
+  display: inline-flex;
   flex-direction: column;
-  margin: 2rem;
+  justify-content: center;
+}
+
+.single-product-container {
+  display: flex;
+  justify-content: space-around;
+  color: #104f55;
 }
 
 .single-product img {
-  width: 20rem;
+  width: 17rem;
   height: 24rem;
+}
+
+.img-desc {
+  display: flex;
+  flex-direction: column;
 }
 
 .single-product h2 {
