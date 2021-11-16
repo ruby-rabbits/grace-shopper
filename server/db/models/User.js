@@ -36,7 +36,12 @@ const User = db.define('user', {
   picture: {
     type: Sequelize.STRING,
     defaultValue: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/1024px-User-avatar.svg.png"
-  }
+  },
+  email: {
+    type: Sequelize.STRING,
+    validate: { isEmail: true },
+    unique: true
+  },
 })
 
 module.exports = User

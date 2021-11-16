@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
  * COMPONENT
  */
 export const MyAccount = (props) => {
+  console.log(props);
   const { username, isAdmin, picture } = props;
 
   return (

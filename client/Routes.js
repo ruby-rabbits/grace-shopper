@@ -10,6 +10,18 @@ import Cart from "./components/Cart";
 import Checkout from "./components/Checkout";
 import { me } from "./store";
 
+// admin panel components
+import AdminPanel from "./components/admin/AdminPanel.js"
+import AdminPanelDenied from "./components/admin/AdminPanelDenied.js"
+
+import AdminProductAdd from "./components/admin/products/AdminProductAdd";
+import AdminProductsEditList from "./components/admin/products/AdminProductsEditList";
+import AdminProductEditSingle from "./components/admin/products/AdminProductEditSingle";
+
+import AdminUsersList from "./components/admin/users/AdminUsersList";
+import AdminUserViewSingle from "./components/admin/users/AdminUserViewSingle";
+import AdminUsersAdmin from "./components/admin/users/AdminUsersAdmin";
+
 /**
  * COMPONENT
  */
@@ -19,7 +31,7 @@ class Routes extends Component {
   }
 
   render() {
-    const { isLoggedIn } = this.props;
+    const { isLoggedIn, isAdmin } = this.props;
 
     return (
       <div className="routes">
@@ -50,6 +62,26 @@ class Routes extends Component {
         <Switch>
           <Route exact path="/products/:productId" component={SingleProduct} />
         </Switch>
+        {/* Admin panel authentication - if it is admin they can see everything. if they cant, they get the denial page*/}
+        {isAdmin ? (
+        <Switch>
+          {/* admin panel root */}
+          <Route exact path='/admin/' component={AdminPanel} />
+          {/* product routes */}
+          <Route exact path='/admin/products/add' component={AdminProductAdd} />
+          <Route exact path='/admin/products/edit' component={AdminProductsEditList} />
+          <Route exact path='/admin/products/edit/:productId' component={AdminProductEditSingle} />
+          {/* user routes */}
+          <Route exact path='/admin/users/view' component={AdminUsersList} />
+          <Route exact path='/admin/users/view/:userId' component={AdminUserViewSingle} />
+          <Route exact path='/admin/users/admin' component={AdminUsersAdmin} />
+
+        </Switch>
+        ) : (
+          <Switch>
+            <Route path='/admin' component={AdminPanelDenied} />
+          </Switch>
+        ) }
       </div>
     );
   }
@@ -63,6 +95,7 @@ const mapState = (state) => {
     // Being 'logged in' for our purposes will be defined has having a state.auth that has a truthy id.
     // Otherwise, state.auth will be an empty object, and state.auth.id will be falsey
     isLoggedIn: !!state.auth.id,
+    isAdmin: !!state.auth.isAdmin,
   };
 };
 
