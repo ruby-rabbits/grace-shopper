@@ -17,6 +17,7 @@ class Cart extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
+    // JOE_CR: Cool!
     if (this.props.userId != prevProps.userId) {
       this.props.getCart(this.props.userId);
     }

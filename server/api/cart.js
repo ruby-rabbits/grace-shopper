@@ -21,9 +21,12 @@ module.exports = router;
 // });
 
 //get products from users cart, filter on front end allows us to use this route to show products in cart and products user has previously bought
+
+// JOE_CR: Security! Any user can view or make changes to any other users cart currently. What can we do to fix?
 router.get("/user/:userId", async (req, res, next) => {
   try {
     const cartIdForUser = await User.findByPk(Number(req.params.userId));
+    // JOE_CR: This await is not necessary--and it also still works. Why?
     const thisCartId = await cartIdForUser.cartId;
     // console.log("THIS IS WHAT WE LOOKING FOR: ", thisCartId);
     const cart = await Cart.findByPk(thisCartId, {
@@ -42,8 +45,10 @@ router.get("/user/:userId", async (req, res, next) => {
 router.post("/user/:userId", async (req, res, next) => {
   try {
     // find or create the product
+    // JOE_CR: You do not need to type cast your userId to a number in this case, but neat that you're thinking about it!
     const cartIdForUser = await User.findByPk(Number(req.params.userId));
     const thisCartId = await cartIdForUser.cartId;
+    // JOE_CR: Nice findOrCreate!
     const [product, created] = await Cart_Product.findOrCreate({
       where: {
         cartId: Number(thisCartId),
@@ -75,6 +80,10 @@ router.post("/user/:userId", async (req, res, next) => {
         ...req.body,
         quantity: quant + product.quantity,
       });
+      // JOE_CR: I'm not entirely sure because Sequelize is weird sometimes, but I don't think you have to be requerying
+      // for your product multiple times like this. You should see updates reflected on the instance you already have.
+      // Keep in mind that the most expensive operations you use in programming are the ones that access things outside of your
+      // program, like database queries, or HTTP requests.
       const finalProduct = await Product.findByPk(updatedProduct.productId, {
         include:{
           model: Cart_Product,
@@ -97,6 +106,7 @@ router.put("/user/:userId/checkout", async (req, res, next) => {
     const cartIdForUser = await User.findByPk(Number(req.params.userId));
     const thisCartId = await cartIdForUser.cartId;
 
+    // JOE_CR: Nice!
     await Cart_Product.update(
       {
         purchased: true,

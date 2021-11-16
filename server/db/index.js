@@ -20,6 +20,7 @@ User.belongsTo(Cart);
 Cart.belongsToMany(Product, {through: Cart_Product});
 Product.belongsToMany(Cart, {through: Cart_Product})
 
+// JOE_CR: Nice!
 Product.hasMany(Cart_Product, {as: 'cart_product'})
 
 module.exports = {
