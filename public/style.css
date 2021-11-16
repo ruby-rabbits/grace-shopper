@@ -43,35 +43,50 @@ nav a:hover {
   padding: 2rem 2.5rem
 }
 
-/* #cartLink {
-  position: absolute;
-  right: 80px;
-} */
-
 form div {
   margin: 1em;
   display: inline-block;
 }
 
 .all-product-container {
-  width: 75%
-}
-
-.all-products {
+  width: 80%;
   display: flex;
   flex-wrap: wrap;
-  margin: 2rem 0;
-  gap: 2rem;
+  gap: 2.5rem;
 }
 
-.all-products img {
+
+.product-card img {
   width: 10rem;
   height: 12rem;
 }
 
 .product-card {
-  flex-basis: 20%
+  flex-basis: 20%;
+  flex-grow: 0;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  /* text-align: center; */
 }
+
+.add-btn {
+  /* margin: 0 20%; */
+  background-color: #2C5FE1;
+  color: white;
+  border: 2px solid white;
+  border-radius: 10px;
+  padding: 3% 0;
+}
+
+.add-btn:hover {
+  background-color: white;
+  color: #2C5FE1;
+  border: 2px solid #2C5FE1
+}
+
 
 .user{
   display: flex;

@@ -17,19 +17,12 @@ class AllProducts extends React.Component {
     // get all product types, map out all product types and display it on landing page
     return (
       <div className="all-product-container">
-        <div className="all-products">
           {products.map((product) => {
             return (
               <ProductCard userId={this.props.userId} product={product} key={product.id} addToCart={this.props.addToCart}/>
 
-              // <ul key={product.id}>
-              //   <img src={product.picture} />
-              //   <li>{product.productName}</li>
-              //   <li>{product.price}</li>
-              // </ul>
             );
           })}
-        </div>
       </div>
     );
   }
