@@ -72,7 +72,7 @@ form div {
   /* text-align: center; */
 }
 
-.add-btn {
+.btn {
   /* margin: 0 20%; */
   background-color: #2C5FE1;
   color: white;
@@ -81,7 +81,7 @@ form div {
   padding: 3% 0;
 }
 
-.add-btn:hover {
+.btn:hover {
   background-color: white;
   color: #2C5FE1;
   border: 2px solid #2C5FE1
@@ -92,20 +92,126 @@ form div {
   display: flex;
   justify-content: flex-start
 }
-#checkout {
-  display: inline-block;
-  padding: 0.3em 1.2em;
-  margin: 20px 0px;
-  border-radius: 2em;
-  box-sizing: border-box;
-  text-decoration: none;
-  font-family: "Roboto", sans-serif;
-  font-weight: 500;
-  color: #ffffff;
-  background-color: #4eb5f1;
-  text-align: center;
-  transition: all 0.2s;
+
+/* Carts */
+
+.cart {
+  display: flex;
+  justify-content: space-between;
 }
-#checkout:hover {
-  background-color: #463dc5;
+
+.cart-items {
+  flex-basis: 70%;
+  box-shadow: 0 4px 8px 0 rgba(116, 116, 116, 0.2), 0 6px 20px 0 rgba(116, 116, 116, 0.2);
+  border-radius: 10px
+}
+
+.cart-items hr {
+  margin: 2rem;
+  color: gray;
+  opacity: 0.5;
+}
+
+.cart-items h1 {
+  margin: 2rem;
+}
+
+.cart-row{
+  display:flex;
+  margin: 2rem
+}
+
+.cart-row img {
+  width: 8rem;
+  height: 10rem;
+}
+
+.info {
+  flex-grow: 1;
+  display: flex;
+  justify-content: space-between;
+
+  padding: 0 2rem
+}
+
+i.bi-trash {
+  font-size: 1.2rem;
+  color: gray;
+}
+
+button.delete {
+  border: none;
+  /* background-color: red; */
+  color: #635F5F;
+  background-color: white;
+  padding: 0;
+}
+
+button.delete:hover i.bi-trash {
+  color: red
+}
+
+button span {
+  margin-left: 5px;
+}
+
+.row-left{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
+}
+
+.row-left h3 {
+  margin-top: 0;
+  color: #635F5F
+}
+
+.row-left h3:hover{
+  color: #2C5FE1;
+}
+
+/* a#img:hover h3#name {
+  color: #2C5FE1
+} */
+
+.row-right{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-end;
+}
+
+input[name=quantity] {
+  width: 20%;
+  padding: 3%;
+  text-align: end;
+}
+
+
+.checkout {
+  flex-basis: 25%
+}
+
+.checkout div {
+  height: auto;
+  padding: 2rem;
+  box-shadow: 0 4px 8px 0 rgba(116, 116, 116, 0.2), 0 6px 20px 0 rgba(116, 116, 116, 0.2);
+  border-radius: 10px
+}
+
+.checkout h2 {
+  margin-top: 0;
+}
+
+.btn-checkout {
+  display: block;
+  padding: 0.5rem 2rem;
+  margin: auto;
+  margin-top: 2rem;
+  width: 80%;
+}
+
+.btn-checkout a {
+  text-decoration: none;
 }
