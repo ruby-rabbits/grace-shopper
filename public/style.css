@@ -34,7 +34,7 @@ nav h1 {
 
 nav a {
   display: inline-block;
-  margin: 1em;
+  margin: 1em 0;
   font-weight: bold;
   padding: 8px 16px;
   color: white;

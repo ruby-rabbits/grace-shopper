@@ -7,7 +7,11 @@ module.exports = router;
 // GET /api/category
 router.get('/', async (req,res,next) => {
   try {
-    const listOfCategories = await Category.findAll();
+    const listOfCategories = await Category.findAll({
+      order: [
+        ['id', 'ASC']
+      ]
+    });
     res.json(listOfCategories)
   } catch (error) {
     next(error)
