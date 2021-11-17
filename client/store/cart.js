@@ -1,4 +1,6 @@
 import axios from "axios";
+const TOKEN = "token";
+const cartObj = {};
 
 // action types
 const GET_CART_PRODUCTS = "GET_CART_PRODUCTS";
@@ -6,7 +8,6 @@ const GET_CART_PRODUCTS = "GET_CART_PRODUCTS";
 // const DECREASE_QUANTITY = "DECREASE_QUANTITY";
 const CHANGE_QUANTITY = "CHANGE_QUANTITY";
 const REMOVE_FROM_CART = "REMOVE_FROM_CART";
-
 const ADD_TO_CART = "ADD_TO_CART";
 const CLEAR_CART = "CLEAR_CART";
 const CHECKOUT = "CKECKOUT";
@@ -61,8 +62,15 @@ export const _addToCart = (product) => {
 export const fetchAllCartProducts = (cartId) => {
   return async (dispatch) => {
     try {
+      // const token = window.localStorage.getItem(TOKEN);
+      // if (token) {
       const { data } = await axios.get(`/api/cart/${cartId}`);
       dispatch(fetchCartProducts(data));
+      // } else {
+      //   let guestCart = localStorage.getItem("cartObj");
+      //   guestCart = JSON.stringify(guestCart);
+      //   dispatch(fetchCartProducts(guestCart));
+      // }
     } catch (error) {
       console.log(error);
     }
@@ -108,14 +116,45 @@ export const checkout = (userId) => {
 };
 
 export const addToCart = (cartId, productId, quantity) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     try {
-      const { data } = await axios.post(`/api/cart`, {
-        cartId,
-        productId,
-        quantity,
-      });
-      dispatch(_addToCart(data));
+      const token = window.localStorage.getItem(TOKEN);
+      if (token) {
+        const { data } = await axios.post(`/api/cart`, {
+          cartId,
+          productId,
+          quantity,
+        });
+        dispatch(_addToCart(data));
+      } else {
+        // localStorage.setItem("cartObj", JSON.stringify(cartObj));
+        let guestCart = localStorage.getItem("cartObj");
+        guestCart = JSON.parse(guestCart);
+        //axios request to get correct product
+        const product = getState().singleProduct;
+        product.cart_product = {
+          amountPaid: null,
+          cartId: "guest",
+          createdAt: Date.now(),
+          id: productId,
+          productId,
+          purchaseDate: null,
+          purchased: false,
+          quantity: quantity,
+          updatedAt: Date.now(),
+        };
+        console.log(product);
+        if (guestCart[productId]) {
+          // guestCart[productId] += quantity;
+
+          guestCart[productId] = product;
+          localStorage.setItem("cartObj", JSON.stringify(guestCart));
+        } else {
+          // guestCart[productId] = quantity;
+          guestCart[productId] = product;
+          localStorage.setItem("cartObj", JSON.stringify(guestCart));
+        }
+      }
     } catch (error) {
       console.log(error);
     }
