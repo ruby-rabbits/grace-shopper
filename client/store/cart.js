@@ -1,15 +1,14 @@
 import axios from "axios";
 const TOKEN = "token";
+const isUser = window.localStorage.getItem(TOKEN);
 
 // action types
 const GET_CART_PRODUCTS = "GET_CART_PRODUCTS";
-// const ADD_QUANTITY = "ADD_QUANTITY";
-// const DECREASE_QUANTITY = "DECREASE_QUANTITY";
 const CHANGE_QUANTITY = "CHANGE_QUANTITY";
 const REMOVE_FROM_CART = "REMOVE_FROM_CART";
 const ADD_TO_CART = "ADD_TO_CART";
 const CLEAR_CART = "CLEAR_CART";
-const CHECKOUT = "CKECKOUT";
+const CHECKOUT = "CHECKOUT";
 
 // action creators
 //get all products user put in cart
@@ -154,6 +153,9 @@ export const addToCart = (cartId, productId, quantity) => {
         }
 
         localStorage.setItem("cartObj", JSON.stringify(cartObj));
+        //test
+        dispatch(_addToCart(cartObj));
+        //test
       }
     } catch (error) {
       console.log(error);
@@ -166,19 +168,32 @@ const initialState = [];
 export default function cartsReducer(state = initialState, action) {
   switch (action.type) {
     case GET_CART_PRODUCTS:
-      return action.products;
+      if (!isUser) {
+        return JSON.parse(localStorage.cartObj);
+      } else {
+        return action.products;
+      }
     case CHANGE_QUANTITY:
-      return state.map((product) => {
-        if (product.id === action.updatedProduct.productId)
-          product.cart_product = action.updatedProduct;
-        return product;
-      });
+      if (!isUser) {
+        return JSON.parse(localStorage.cartObj.quantity); ///NEEDS WORK
+      } else {
+        return state.map((product) => {
+          if (product.id === action.updatedProduct.productId)
+            product.cart_product = action.updatedProduct;
+          return product;
+        });
+      }
+
     case ADD_TO_CART:
-      action.product.cart_product = action.product.cart_product[0];
-      return [
-        ...state.filter((product) => product.id !== action.product.id),
-        action.product,
-      ];
+      if (!isUser) {
+        return JSON.parse(localStorage.cartObj);
+      } else {
+        action.product.cart_product = action.product.cart_product[0];
+        return [
+          ...state.filter((product) => product.id !== action.product.id),
+          action.product,
+        ];
+      }
 
     case REMOVE_FROM_CART:
       return state.filter((product) => product.id !== action.product.productId);
