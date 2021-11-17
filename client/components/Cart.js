@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { checkout, fetchAllCartProducts } from '../store/cart';
+import { checkout, clearCart, fetchAllCartProducts } from '../store/cart';
 import ProductInCart from './ProductInCart';
 import { Link } from 'react-router-dom';
 class Cart extends React.Component {
@@ -37,7 +37,7 @@ class Cart extends React.Component {
     return (
       <div className="cart">
         <div className="cart-items">
-          <h1>Your Items</h1>
+          <h1>Your Items ({this.props.cart.length})</h1>
           {
             //would eventually be this.props.cart.map
             this.props.cart.length === 0
@@ -86,6 +86,9 @@ const mapDispatchToProps = (dispatch) => {
     checkoutCart: () => {
       dispatch(checkout());
     },
+    clearCart: () => {
+      dispatch(clearCart())
+    }
   };
 };
 

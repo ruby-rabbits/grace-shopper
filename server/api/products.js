@@ -3,7 +3,8 @@ const {
   models: { Product, Cart },
 } = require("../db");
 const Cart_Product = require("../db/models/Cart_Product");
-  const { requireToken, isAdmin } = require('./gatekeepingMiddleware')
+const Category = require("../db/models/Category");
+const { requireToken, isAdmin } = require('./gatekeepingMiddleware')
 module.exports = router;
 
 
@@ -11,7 +12,7 @@ module.exports = router;
 // GET /api/products  ==> all products
 router.get("/", async (req, res, next) => {
   try {
-    const products = await Product.findAll({order: [['id', 'ASC']]});
+    const products = await Product.findAll({order: [['id', 'ASC']], include: Category});
     res.json(products);
   } catch (err) {
     next(err);
