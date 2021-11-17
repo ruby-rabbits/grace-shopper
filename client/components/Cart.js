@@ -22,6 +22,7 @@ class Cart extends React.Component {
     }
   }
 
+
   onCheckout() {
     this.props.checkoutCart();
   }
