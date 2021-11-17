@@ -108,10 +108,11 @@ export const checkout = (userId) => {
   };
 };
 
-export const addToCart = (userId, productId, quantity) => {
+export const addToCart = (cartId, productId, quantity) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.post(`/api/cart/user/${userId}`, {
+      const { data } = await axios.post(`/api/cart`, {
+        cartId,
         productId,
         quantity,
       });
