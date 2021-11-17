@@ -13,6 +13,11 @@ label {
   display: block;
 }
 
+.nav-bar {
+  position: sticky;
+  top: 0;
+}
+
 nav {
   background-color: #104f55;
 }
@@ -29,7 +34,7 @@ nav h1 {
 
 nav a {
   display: inline-block;
-  margin: 1em;
+  margin: 1em 0;
   font-weight: bold;
   padding: 8px 16px;
   color: white;
@@ -47,7 +52,7 @@ div#auth {
   margin: auto 0;
 }
 
-form#auth{
+form#auth {
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -55,7 +60,7 @@ form#auth{
   margin: auto;
 }
 
-form#auth h1{
+form#auth h1 {
   margin: auto;
 }
 
@@ -67,15 +72,14 @@ form#auth input {
   background-color: #cecece;
   color: rgb(63, 63, 63);
   border-radius: 5px;
-  border: none
-
+  border: none;
 }
 
 form div {
   margin: 1em 0;
 }
 
-form#auth button[type=submit]{
+form#auth button[type='submit'] {
   background-color: #104f55;
   color: white;
   border: 2px solid white;
@@ -85,20 +89,18 @@ form#auth button[type=submit]{
   width: 100%;
 }
 
-form#auth button[type=submit]:hover {
+form#auth button[type='submit']:hover {
   border-color: #104f55;
   background-color: white;
-  color: #104f55
+  color: #104f55;
 }
 
 .all-product-container {
-
   width: 85%;
   display: flex;
   flex-wrap: wrap;
   gap: 1.5rem 3rem;
 }
-
 
 .product-card img {
   width: 10rem;
@@ -120,7 +122,8 @@ form#auth button[type=submit]:hover {
   display: flex;
   justify-content: space-around;
   color: #104f55;
-  box-shadow: 0 4px 8px 0 rgba(116, 116, 116, 0.2), 0 6px 20px 0 rgba(116, 116, 116, 0.2);
+  box-shadow: 0 4px 8px 0 rgba(116, 116, 116, 0.2),
+    0 6px 20px 0 rgba(116, 116, 116, 0.2);
   border-radius: 10px;
   padding: 2rem;
   width: 80%;
@@ -146,11 +149,11 @@ form#auth button[type=submit]:hover {
   padding: 1rem;
 }
 .product-card a:hover {
-  color: #2C5FE1;
-  box-shadow: 0 4px 8px 0 rgba(116, 116, 116, 0.2), 0 6px 20px 0 rgba(116, 116, 116, 0.2);
-  border-radius: 10px
+  color: #2c5fe1;
+  box-shadow: 0 4px 8px 0 rgba(116, 116, 116, 0.2),
+    0 6px 20px 0 rgba(116, 116, 116, 0.2);
+  border-radius: 10px;
 }
-
 
 .product-card {
   flex-basis: 20%;
@@ -162,11 +165,9 @@ form#auth button[type=submit]:hover {
   /* text-align: center; */
 }
 
-
-
 .btn {
   /* margin: 0 20%; */
-  background-color: #2C5FE1;
+  background-color: #2c5fe1;
   color: white;
   border: 2px solid white;
   border-radius: 10px;
@@ -177,8 +178,8 @@ form#auth button[type=submit]:hover {
 
 .btn:hover {
   background-color: white;
-  color: #2C5FE1;
-  border: 2px solid #2C5FE1
+  color: #2c5fe1;
+  border: 2px solid #2c5fe1;
 }
 
 /* Single Product */
@@ -189,8 +190,7 @@ i.quantity {
   margin: 0.5rem;
 }
 
-
-.user{
+.user {
   display: flex;
   justify-content: flex-start;
 }
@@ -204,8 +204,9 @@ i.quantity {
 
 .cart-items {
   flex-basis: 70%;
-  box-shadow: 0 4px 8px 0 rgba(116, 116, 116, 0.2), 0 6px 20px 0 rgba(116, 116, 116, 0.2);
-  border-radius: 10px
+  box-shadow: 0 4px 8px 0 rgba(116, 116, 116, 0.2),
+    0 6px 20px 0 rgba(116, 116, 116, 0.2);
+  border-radius: 10px;
 }
 
 .cart-items hr {
@@ -218,9 +219,9 @@ i.quantity {
   margin: 2rem;
 }
 
-.cart-row{
-  display:flex;
-  margin: 2rem
+.cart-row {
+  display: flex;
+  margin: 2rem;
 }
 
 .cart-row img {
@@ -233,7 +234,7 @@ i.quantity {
   display: flex;
   justify-content: space-between;
 
-  padding: 0 2rem
+  padding: 0 2rem;
 }
 
 i.bi-trash {
@@ -244,20 +245,20 @@ i.bi-trash {
 button.delete {
   border: none;
   /* background-color: red; */
-  color: #635F5F;
+  color: #635f5f;
   background-color: white;
   padding: 0;
 }
 
 button.delete:hover i.bi-trash {
-  color: red
+  color: red;
 }
 
 button span {
   margin-left: 5px;
 }
 
-.row-left{
+.row-left {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -266,40 +267,40 @@ button span {
 
 .row-left h3 {
   margin-top: 0;
-  color: #635F5F
+  color: #635f5f;
 }
 
-.row-left h3:hover{
-  color: #2C5FE1;
+.row-left h3:hover {
+  color: #2c5fe1;
 }
 
 /* a#img:hover h3#name {
   color: #2C5FE1
 } */
 
-.row-right{
+.row-right {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-items: flex-end;
 }
 
-input[name=quantity] {
+input[name='quantity'] {
   width: 20%;
   padding: 3%;
   text-align: end;
 }
 
-
 .checkout {
-  flex-basis: 25%
+  flex-basis: 25%;
 }
 
 .checkout div {
   height: auto;
   padding: 2rem;
-  box-shadow: 0 4px 8px 0 rgba(116, 116, 116, 0.2), 0 6px 20px 0 rgba(116, 116, 116, 0.2);
-  border-radius: 10px
+  box-shadow: 0 4px 8px 0 rgba(116, 116, 116, 0.2),
+    0 6px 20px 0 rgba(116, 116, 116, 0.2);
+  border-radius: 10px;
 }
 
 .checkout h2 {

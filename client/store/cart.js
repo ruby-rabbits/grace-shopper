@@ -145,7 +145,7 @@ export default function cartsReducer(state = initialState, action) {
       return state.filter((product) => product.id !== action.product.productId);
 
     case CHECKOUT:
-      return action.products;
+      return [];
 
     case CLEAR_CART:
       return [];

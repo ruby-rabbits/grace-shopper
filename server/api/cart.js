@@ -16,7 +16,6 @@ router.get('/:cartId', async (req, res, next) => {
       },
     });
     const currentCart = cart.products.filter(item => !item.cart_product.purchased)
-    console.log(currentCart)
     res.json(currentCart);
   } catch (err) {
     next(err);
@@ -137,6 +136,7 @@ router.put('/user/:userId/checkout', async (req, res, next) => {
         model: Product,
       },
     });
+    console.log(updatedCart)
     res.json(updatedCart);
   } catch (err) {
     next(err);
