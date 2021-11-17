@@ -11,7 +11,10 @@ const userData = JSON.parse(fs.readFileSync('mock-data/users.json', 'utf8'));
 // ).slice(0, 100);
 const moviesData = JSON.parse(
   fs.readFileSync('mock-data/movies.json', 'utf8')
-).slice(0, 100);
+).slice(0, 50);
+const eventsData = JSON.parse(
+  fs.readFileSync('mock-data/events.json', 'utf8')
+).slice(0, 50);
 const cartProductData = JSON.parse(
   fs.readFileSync('mock-data/cart_product.json', 'utf8')
 ).slice(0, 100);
@@ -46,7 +49,7 @@ async function seed() {
     }),
     Category.create({
       categoryDisplayName: 'Theatre Shows',
-      categoryURLName: 'theatre',
+      categoryURLName: 'theater',
     }),
     Category.create({
       categoryDisplayName: 'Sporting Events',
@@ -58,24 +61,49 @@ async function seed() {
     }),
   ]);
 
+  let mapping = {};
+  categories.forEach((category) => {
+    mapping[category.categoryURLName] = category.id;
+  });
+
   // Creating products
   // const products = await Promise.all(
   //   productData.map((product) => Product.create(product))
   // );
 
   function randomDate(start, end) {
-    return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+    return new Date(
+      start.getTime() + Math.random() * (end.getTime() - start.getTime())
+    );
   }
 
   // Adding in movies data from OMDB api
   const movie_products = await Promise.all(
     moviesData.map((movie) => {
-      let price = (Math.random()*30).toFixed(2);
-      let categoryId = Math.floor(Math.random() * 5) +1;
-      let date = randomDate(new Date(), new Date(2022, 12, 24))
-      Product.create({price, date, categoryId, picture: movie.Poster, productName: movie.Title})
+      let price = (Math.random() * 30).toFixed(2);
+      let date = randomDate(new Date(), new Date(2022, 12, 24));
+      Product.create({
+        price,
+        date,
+        categoryId: mapping['movies'],
+        picture: movie.Poster,
+        productName: movie.Title,
+      });
     })
-  )
+  );
+
+  // Adding in events data from SEATGEEK api
+  const event_products = await Promise.all(
+    eventsData.map((event) => {
+      Product.create({
+        price: event.price,
+        date: event.date,
+        categoryId: mapping[event.category],
+        picture: event.picture,
+        productName: event.productName,
+      });
+    })
+  );
 
   // Creating rows in Cart_Products
   const cart_products = await Promise.all(
@@ -85,7 +113,7 @@ async function seed() {
   console.log(
     `seeded ${users.length + mockUsers.length} users, ${
       categories.length
-    } categories, ${movie_products.length} products, ${
+    } categories, ${movie_products.length} movies, ${event_products.length} events,${
       cart_products.length
     } rows in Cart_Product`
   );

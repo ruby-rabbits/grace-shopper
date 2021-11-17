@@ -25,7 +25,6 @@ class Cart extends React.Component {
 
   async onCheckout() {
     await this.props.checkoutCart(this.props.userId);
-    // this.props.clearCart();
 
   }
 
