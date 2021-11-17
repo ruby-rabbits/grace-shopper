@@ -33,7 +33,11 @@ export const setProduct = (product) => {
 export const fetchAllProducts = () => {
     return async (dispatch) => {
         try {
-            const {data} = await axios.get('/api/products')
+            const token = window.localStorage.getItem('token');
+            const {data} = await axios.get('/api/products', {
+                headers: {
+                  authorization: token
+                } })
             dispatch(fetchProducts(data))
         }
         catch(error) {
@@ -46,11 +50,14 @@ export const fetchAllProducts = () => {
 export const createProduct = (product) => {
     return async (dispatch) => {
         try { 
-            const {data: created } = await axios.post('/api/products', product)
+            const token = window.localStorage.getItem('token');
+            const {data: created } = await axios.post('/api/products', product, {
+                  headers: { authorization: token }
+              })
             dispatch(_createProduct(created))
         }
         catch(error) {
-        return dispatch(setProduct({error}))
+            console.log(error);
         }
     }
 }

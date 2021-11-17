@@ -30,7 +30,7 @@ export class AdminProductAdd extends React.Component {
             picture: '',
             description: '',
             price: 0,
-            categoryId: 0
+            categoryId: 1
         })
       }
 
@@ -41,7 +41,6 @@ export class AdminProductAdd extends React.Component {
     render() {
         const { productName, picture, description, price, categoryId, error } = this.state;
         const { handleSubmit, handleChange } = this;
-        console.log(error);
         return (
             <form id='add-product-form' onSubmit={handleSubmit}>
               <label htmlFor='productName'>Product Name:</label>

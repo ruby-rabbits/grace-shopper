@@ -12,12 +12,12 @@ export class AdminProductsEditList extends React.Component {
     }
 
     render() {
-      console.log(this.props.props)
       const products = this.props.products;
         return (
-            <div>Admin - Products - Edit List
+            <div><h2>Admin - Products - Edit/Delete List</h2>
+              <span>Click link to edit, click x button to delete.</span>
               <ul>
-              { (products.length === 0) ? 'Loading' : products.map(product => (<li><Link to={`/admin/products/edit/${product.id}`}>{product.productName}</Link></li>) ) }
+              { (products.length === 0) ? 'Loading' : products.map(product => (<li key={`${product.id}`}><Link to={`/admin/products/edit/${product.id}`}>{product.productName}</Link> <button>x</button></li>) ) }
               </ul>
             </div>
             

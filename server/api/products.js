@@ -3,12 +3,15 @@ const {
   models: { Product, Cart },
 } = require("../db");
 const Cart_Product = require("../db/models/Cart_Product");
+const { requireToken, isAdmin } = require('./gatekeepingMiddleware')
 module.exports = router;
+
+
 
 // GET /api/products  ==> all products
 router.get("/", async (req, res, next) => {
   try {
-    const products = await Product.findAll();
+    const products = await Product.findAll({order: [['id', 'ASC']]});
     res.json(products);
   } catch (err) {
     next(err);
@@ -43,7 +46,7 @@ router.get("/:id", async (req, res, next) => {
 });
 
 // POST /api/products == > create new product row
-router.post("/", async (req, res, next) => {
+router.post("/", requireToken, isAdmin, async (req, res, next) => {
   try {
     const { productName, picture, description, price, categoryId } = req.body;
     const newProduct = await Product.create({ productName: productName, picture: picture, description: description, price: price, categoryId: Number(categoryId), date: new Date() });

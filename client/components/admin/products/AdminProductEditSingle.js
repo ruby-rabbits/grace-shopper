@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { createProduct, fetchAllProducts } from '../../../store/products';
+import { fetchSingleProduct } from '../../../store/singleProduct';
+import { Link } from 'react-router-dom';
 
 export class AdminProductEditSingle extends React.Component {
     constructor() {
@@ -16,6 +18,26 @@ export class AdminProductEditSingle extends React.Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
+    componentDidMount() {
+        this.props.getSingleProduct(this.props.match.params.productId);
+    }
+
+    componentWillUnmount() {
+        // this.props.clearSingleProduct(); <<-- NOTE TO/FROM LAWRENCE: MAKE THIS THUNK! Clear singleProduct store data. Also put this in single product page veiw?
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.singleProduct.id !== this.props.singleProduct.id) {
+            this.setState({
+                productName: this.props.singleProduct.productName || '',
+                picture: this.props.singleProduct.picture || '',
+                description: this.props.singleProduct.description || '',
+                price: this.props.singleProduct.price || 0,
+                categoryId: this.props.singleProduct.categoryId || 1
+            });
+            }
+        }
+
     handleChange(evt) {
         this.setState({
         [evt.target.name]: evt.target.value
@@ -24,7 +46,6 @@ export class AdminProductEditSingle extends React.Component {
 
     handleSubmit(evt) {
         evt.preventDefault();
-        console.log(this.state);
         this.props.createProduct({ ...this.state });
         this.setState({
             productName: '',
@@ -35,15 +56,11 @@ export class AdminProductEditSingle extends React.Component {
         })
       }
 
-      componentDidMount() {
-          this.props.fetchAllProducts()
-      }
-
     render() {
         const { productName, picture, description, price, categoryId } = this.state;
         const { handleSubmit, handleChange } = this;
         return (
-            <form id='add-product-form' onSubmit={handleSubmit}>Edit Products Form
+            <div><form id='add-product-form' onSubmit={handleSubmit}><h2>Edit Products Form</h2>
               <label htmlFor='productName'>Product Name:</label>
               <input name='productName' onChange={handleChange} value={productName} />
 
@@ -63,13 +80,20 @@ export class AdminProductEditSingle extends React.Component {
               </select>
               <button type='submit'>Add Product</button>
             </form>
+            <div><Link to='/admin/products/edit/'>Back to Edit List</Link></div>
+            </div>
           );
     }
 }
 
+const mapStateToProps = ({ singleProduct } ) => ({
+    singleProduct
+});
+
 const mapDispatchToProps = (dispatch) => ({
     createProduct: (product) => dispatch(createProduct(product)),
-    fetchAllProducts: () => dispatch(fetchAllProducts())
+    fetchAllProducts: () => dispatch(fetchAllProducts()),
+    getSingleProduct: (productId) => dispatch(fetchSingleProduct(productId))
   });
 
-  export default connect(null, mapDispatchToProps)(AdminProductEditSingle);
+  export default connect(mapStateToProps, mapDispatchToProps)(AdminProductEditSingle);
