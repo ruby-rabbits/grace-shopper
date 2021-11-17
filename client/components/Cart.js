@@ -11,14 +11,14 @@ class Cart extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.userId) {
-      this.props.getCart(this.props.userId);
+    if (this.props.cartId) {
+      this.props.getCart(this.props.cartId);
     }
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.userId != prevProps.userId) {
-      this.props.getCart(this.props.userId);
+    if (this.props.cartId != prevProps.cartId) {
+      this.props.getCart(this.props.cartId);
     }
   }
 
@@ -73,14 +73,15 @@ class Cart extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  cart: state.cart.filter((product) => !product.cart_product.purchased),
+  cart: state.cart,
   userId: state.auth.id,
+  cartId : state.auth.cartId
 });
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getCart: (userId) => {
-      dispatch(fetchAllCartProducts(userId));
+    getCart: (cartId) => {
+      dispatch(fetchAllCartProducts(cartId));
     },
     checkoutCart: (userId) => {
       dispatch(checkout(userId));

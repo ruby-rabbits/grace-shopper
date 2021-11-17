@@ -39,7 +39,6 @@ class ProductInCart extends React.Component {
               onClick={() => {
                 const { userId, product } = this.props;
                 const productId = product.id;
-                console.log(this.props);
                 this.props.remFromCart({ userId, productId });
               }}
             >

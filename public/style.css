@@ -36,16 +36,59 @@ nav a {
 }
 
 nav a:hover {
-  color: blue;
+  color: black;
 }
 
 .routes {
   padding: 2rem 2.5rem;
 }
 
+div#auth {
+  margin: auto 0;
+}
+
+form#auth{
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 20%;
+  margin: auto;
+}
+
+form#auth h1{
+  margin: auto;
+}
+
+form#auth input {
+  margin: 0.5rem 0;
+  width: 100%;
+  padding: 0.3rem 0.5rem;
+  box-sizing: border-box;
+  background-color: #cecece;
+  color: rgb(63, 63, 63);
+  border-radius: 5px;
+  border: none
+
+}
+
 form div {
-  margin: 1em;
-  display: inline-block;
+  margin: 1em 0;
+}
+
+form#auth button[type=submit]{
+  background-color: #104f55;
+  color: white;
+  border: 2px solid white;
+  border-radius: 10px;
+  margin: auto;
+  padding: 0.5rem 2rem;
+  width: 100%;
+}
+
+form#auth button[type=submit]:hover {
+  border-color: #104f55;
+  background-color: white;
+  color: #104f55
 }
 
 .all-product-container {
