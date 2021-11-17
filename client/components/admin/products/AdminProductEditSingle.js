@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { createProduct, fetchAllProducts } from '../../../store/products';
+import { updateProduct, fetchAllProducts } from '../../../store/products';
 import { fetchSingleProduct, setSingleProduct } from '../../../store/singleProduct';
 import { Link } from 'react-router-dom';
 
@@ -24,12 +24,20 @@ export class AdminProductEditSingle extends React.Component {
 
     componentWillUnmount() {
         this.props.clearSingleProduct(); 
+        this.setState({
+            productName: '',
+            picture: '',
+            description: '',
+            price: 0,
+            categoryId: 0
+        })
         // <<-- NOTE TO/FROM LAWRENCE: MAKE THIS THUNK! Clear singleProduct store data. Also put this in single product page veiw?
     }
 
     componentDidUpdate(prevProps) {
         if (prevProps.singleProduct.id !== this.props.singleProduct.id) {
             this.setState({
+                id: this.props.singleProduct.id,
                 productName: this.props.singleProduct.productName || '',
                 picture: this.props.singleProduct.picture || '',
                 description: this.props.singleProduct.description || '',
@@ -47,14 +55,8 @@ export class AdminProductEditSingle extends React.Component {
 
     handleSubmit(evt) {
         evt.preventDefault();
-        this.props.createProduct({ ...this.state });
-        this.setState({
-            productName: '',
-            picture: '',
-            description: '',
-            price: 0,
-            categoryId: 0
-        })
+        this.props.updateProduct({ ...this.state });
+        
       }
 
     render() {
@@ -79,7 +81,7 @@ export class AdminProductEditSingle extends React.Component {
                   <option value='1'>Test Option</option>
                   <option value='2'>Test Option</option>
               </select>
-              <button type='submit'>Add Product</button>
+              <button type='submit'>Edit Product</button>
             </form>
             <div><Link to='/admin/products/edit/'>Back to Edit List</Link></div>
             </div>
@@ -92,7 +94,7 @@ const mapStateToProps = ({ singleProduct } ) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    createProduct: (product) => dispatch(createProduct(product)),
+    updateProduct: (product) => dispatch(updateProduct(product)),
     fetchAllProducts: () => dispatch(fetchAllProducts()),
     getSingleProduct: (productId) => dispatch(fetchSingleProduct(productId)),
     clearSingleProduct: () => dispatch(setSingleProduct({}))

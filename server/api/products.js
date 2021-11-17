@@ -60,10 +60,10 @@ router.post("/", requireToken, isAdmin, async (req, res, next) => {
   }
 });
 
-// PUT /api/products/:id ==> edit product with id
-router.put("/:id", async (req, res, next) => {
+// PUT /api/products/ ==> edit product with id (id passed in through req.body)
+router.put("/", requireToken, isAdmin, async (req, res, next) => {
   try {
-    const productToUpdate = await Product.findByPk(req.params.id);
+    const productToUpdate = await Product.findByPk(req.body.id);
     const updatedProduct = await productToUpdate.update(req.body);
     res.json(updatedProduct);
   } catch (err) {
@@ -72,7 +72,7 @@ router.put("/:id", async (req, res, next) => {
 });
 
 // DELETE /api/products/:id ==> delete product with id
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:id", requireToken, isAdmin, async (req, res, next) => {
   try {
     const productToDelete = await Product.findByPk(req.params.id);
     await productToDelete.destroy();

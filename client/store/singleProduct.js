@@ -32,6 +32,8 @@ export const fetchSingleProduct = (id) => {
   }
 }
 
+
+
 //Reducer
 const initialState = {}
 
