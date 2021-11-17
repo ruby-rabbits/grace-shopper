@@ -1,6 +1,5 @@
 import axios from "axios";
 const TOKEN = "token";
-const cartObj = {};
 
 // action types
 const GET_CART_PRODUCTS = "GET_CART_PRODUCTS";
@@ -127,10 +126,10 @@ export const addToCart = (cartId, productId, quantity) => {
         });
         dispatch(_addToCart(data));
       } else {
-        // localStorage.setItem("cartObj", JSON.stringify(cartObj));
-        let guestCart = localStorage.getItem("cartObj");
-        guestCart = JSON.parse(guestCart);
-        //axios request to get correct product
+        let cartObj = JSON.parse(localStorage.getItem("cartObj"));
+        if (cartObj === null) {
+          cartObj = [];
+        }
         const product = getState().singleProduct;
         product.cart_product = {
           amountPaid: null,
@@ -143,17 +142,18 @@ export const addToCart = (cartId, productId, quantity) => {
           quantity: quantity,
           updatedAt: Date.now(),
         };
-        console.log(product);
-        if (guestCart[productId]) {
-          // guestCart[productId] += quantity;
-
-          guestCart[productId] = product;
-          localStorage.setItem("cartObj", JSON.stringify(guestCart));
-        } else {
-          // guestCart[productId] = quantity;
-          guestCart[productId] = product;
-          localStorage.setItem("cartObj", JSON.stringify(guestCart));
+        let found = false;
+        cartObj.forEach((item) => {
+          if (item.id === product.id) {
+            item.cart_product.quantity += quantity;
+            found = true;
+          }
+        });
+        if (!found) {
+          cartObj.push(product);
         }
+
+        localStorage.setItem("cartObj", JSON.stringify(cartObj));
       }
     } catch (error) {
       console.log(error);
