@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { checkout, fetchAllCartProducts } from '../store/cart';
+import { checkout, clearCart, fetchAllCartProducts } from '../store/cart';
 import ProductInCart from './ProductInCart';
 import { Link } from 'react-router-dom';
 class Cart extends React.Component {
@@ -19,11 +19,14 @@ class Cart extends React.Component {
   componentDidUpdate(prevProps) {
     if (this.props.cartId != prevProps.cartId) {
       this.props.getCart(this.props.cartId);
+
     }
   }
 
-  onCheckout() {
-    this.props.checkoutCart(this.props.userId);
+  async onCheckout() {
+    await this.props.checkoutCart(this.props.userId);
+    // this.props.clearCart();
+
   }
 
   computeTotalPrice() {
@@ -86,6 +89,9 @@ const mapDispatchToProps = (dispatch) => {
     checkoutCart: (userId) => {
       dispatch(checkout(userId));
     },
+    clearCart: () => {
+      dispatch(clearCart())
+    }
   };
 };
 
