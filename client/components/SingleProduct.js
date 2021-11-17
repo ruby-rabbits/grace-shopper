@@ -35,7 +35,6 @@ export class SingleProduct extends React.Component {
     };
     try {
       this.props.addToCart(
-        this.props.cartId,
         this.props.product.id,
         this.state.quantity
       );
@@ -113,8 +112,8 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     getSingleProduct: (id) => dispatch(fetchSingleProduct(id)),
-    addToCart: (cartId, productId, quantity) =>
-      dispatch(addToCart(cartId, productId, quantity)),
+    addToCart: (productId, quantity) =>
+      dispatch(addToCart(productId, quantity)),
   };
 };
 export default connect(mapState, mapDispatch)(SingleProduct);

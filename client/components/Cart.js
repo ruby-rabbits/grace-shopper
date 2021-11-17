@@ -12,20 +12,19 @@ class Cart extends React.Component {
 
   componentDidMount() {
     if (this.props.cartId) {
-      this.props.getCart(this.props.cartId);
+      this.props.getCart();
     }
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.cartId != prevProps.cartId) {
-      this.props.getCart(this.props.cartId);
-
+      this.props.getCart();
     }
   }
 
-  async onCheckout() {
-    await this.props.checkoutCart(this.props.userId);
 
+  onCheckout() {
+    this.props.checkoutCart();
   }
 
   computeTotalPrice() {
@@ -82,11 +81,11 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getCart: (cartId) => {
-      dispatch(fetchAllCartProducts(cartId));
+    getCart: () => {
+      dispatch(fetchAllCartProducts());
     },
-    checkoutCart: (userId) => {
-      dispatch(checkout(userId));
+    checkoutCart: () => {
+      dispatch(checkout());
     },
     clearCart: () => {
       dispatch(clearCart())

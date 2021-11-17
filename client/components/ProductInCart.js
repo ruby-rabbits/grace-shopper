@@ -15,7 +15,6 @@ class ProductInCart extends React.Component {
     // console.log(this.props);
     const { userId, product } = this.props;
     this.props.changeQuantity({
-      userId,
       quantity: e.target.value,
       productId: product.id,
     });
@@ -37,9 +36,9 @@ class ProductInCart extends React.Component {
               className="delete"
               type="submit"
               onClick={() => {
-                const { userId, product } = this.props;
+                const { product } = this.props;
                 const productId = product.id;
-                this.props.remFromCart({ userId, productId });
+                this.props.remFromCart({ productId });
               }}
             >
               <i className="bi bi-trash"></i>
