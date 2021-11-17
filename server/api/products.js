@@ -3,7 +3,7 @@ const {
   models: { Product, Cart },
 } = require("../db");
 const Cart_Product = require("../db/models/Cart_Product");
-const { requireToken, isAdmin } = require('./gatekeepingMiddleware')
+  const { requireToken, isAdmin } = require('./gatekeepingMiddleware')
 module.exports = router;
 
 
