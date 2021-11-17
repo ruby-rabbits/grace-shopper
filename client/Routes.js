@@ -21,6 +21,7 @@ import AdminProductEditSingle from "./components/admin/products/AdminProductEdit
 import AdminUsersList from "./components/admin/users/AdminUsersList";
 import AdminUserViewSingle from "./components/admin/users/AdminUserViewSingle";
 import AdminUsersAdmin from "./components/admin/users/AdminUsersAdmin";
+import CategoryPage from "./components/CategoryPage";
 
 /**
  * COMPONENT
@@ -31,7 +32,7 @@ class Routes extends Component {
   }
 
   render() {
-    const { isLoggedIn, isAdmin } = this.props;
+    const { isLoggedIn, isAdmin, categories } = this.props;
 
     return (
       <div className="routes">
@@ -61,6 +62,11 @@ class Routes extends Component {
         {/* This is commented out, as I ran into some fuzzy loading if I made a seperate switch router. EDIT: FIXED with by stating EXACT PATH*/}
         <Switch>
           <Route exact path="/products/:productId" component={SingleProduct} />
+          {
+            categories.map( category => (
+              <Route key={category.id} exact path={`/${category.categoryURLName}`} render= {() => <CategoryPage category={category} />} />
+            ))
+          }
         </Switch>
         {/* Admin panel authentication - if it is admin they can see everything. if they cant, they get the denial page*/}
         {isAdmin ? (
@@ -96,6 +102,7 @@ const mapState = (state) => {
     // Otherwise, state.auth will be an empty object, and state.auth.id will be falsey
     isLoggedIn: !!state.auth.id,
     isAdmin: !!state.auth.isAdmin,
+    categories: state.categories
   };
 };
 

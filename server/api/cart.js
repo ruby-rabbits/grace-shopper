@@ -3,32 +3,36 @@ const {
   models: { User, Product, Cart, Cart_Product },
 } = require('../db');
 
+const { requireToken } = require('./gatekeepingMiddleware')
+
 module.exports = router;
 
 //get products from users cart, filter on front end allows us to use this route to show products in cart and products user has previously bought
-router.get('/:cartId', async (req, res, next) => {
+router.get('/', requireToken, async (req, res, next) => {
   try {
     // console.log("THIS IS WHAT WE LOOKING FOR: ", thisCartId);
-    const cartId = Number(req.params.cartId);
+    // const cartId = Number(req.params.cartId); <-- for when cart was being pushed through URL
+    const cartId = req.user.cartId
+    // ^^ cart provided through token authentication middleware
     const cart = await Cart.findByPk(cartId, {
       include: {
         model: Product,
       },
     });
     const currentCart = cart.products.filter(item => !item.cart_product.purchased)
-    console.log(currentCart)
     res.json(currentCart);
   } catch (err) {
     next(err);
   }
 });
 
-// POST  == > create new cart_product entry
-// what to pass in req.body: cartId, productId, quantity
+// POST  == > create new cart_product entry - /api/cart/
+// what to pass in req.body: productId, quantity
 
-router.post('/', async (req, res, next) => {
+router.post('/', requireToken, async (req, res, next) => {
   try {
-    const {cartId, productId, quantity} = req.body
+    const {productId, quantity} = req.body
+    const cartId = req.user.cartId
     let [cartProduct, created] = await Cart_Product.findOrCreate({
       where: {
         cartId,
@@ -115,10 +119,9 @@ router.post('/', async (req, res, next) => {
 // });
 
 //PUT change columns in cart_products: amountPaid, purchased, purchaseDate
-router.put('/user/:userId/checkout', async (req, res, next) => {
+router.put('/checkout', requireToken, async (req, res, next) => {
   try {
-    const userWithCart = await User.findByPk(Number(req.params.userId));
-    const thisCartId = await userWithCart.cartId;
+    const thisCartId = req.user.cartId
 
     await Cart_Product.update(
       {
@@ -137,17 +140,17 @@ router.put('/user/:userId/checkout', async (req, res, next) => {
         model: Product,
       },
     });
+    console.log(updatedCart)
     res.json(updatedCart);
   } catch (err) {
     next(err);
   }
 });
 
-//PUT change quantity to specified amount
-router.put('/user/:userId/quantity', async (req, res, next) => {
+//PUT change quantity to specified amount - /api/cart/quantity
+router.put('/quantity', requireToken, async (req, res, next) => {
   try {
-    const userWithCart = await User.findByPk(Number(req.params.userId));
-    const thisCartId = await userWithCart.cartId;
+    const thisCartId = req.user.cartId
 
     const productToUpdate = await Cart_Product.findOne({
       where: {
@@ -164,16 +167,14 @@ router.put('/user/:userId/quantity', async (req, res, next) => {
   }
 });
 
-// DELETE /api/orders/:id ==> delete order with id
-router.delete('/user/:userId/:productId', async (req, res, next) => {
+// DELETE /api/cart/ ==> delete order with id
+router.delete('/', requireToken, async (req, res, next) => {
   try {
-    const userWithCart = await User.findByPk(Number(req.params.userId));
-    const thisCartId = await userWithCart.cartId;
-
+    const thisCartId = req.user.cartId
     const productToDelete = await Cart_Product.findOne({
       where: {
         cartId: Number(thisCartId),
-        productId: Number(req.params.productId),
+        productId: Number(req.body.productId),
       },
     });
     await productToDelete.destroy();

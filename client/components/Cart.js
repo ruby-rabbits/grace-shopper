@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { checkout, fetchAllCartProducts } from '../store/cart';
+import { checkout, clearCart, fetchAllCartProducts } from '../store/cart';
 import ProductInCart from './ProductInCart';
 import { Link } from 'react-router-dom';
 class Cart extends React.Component {
@@ -12,18 +12,18 @@ class Cart extends React.Component {
 
   componentDidMount() {
     if (this.props.cartId) {
-      this.props.getCart(this.props.cartId);
+      this.props.getCart();
     }
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.cartId != prevProps.cartId) {
-      this.props.getCart(this.props.cartId);
+      this.props.getCart();
     }
   }
 
   onCheckout() {
-    this.props.checkoutCart(this.props.userId);
+    this.props.checkoutCart();
   }
 
   computeTotalPrice() {
@@ -37,7 +37,7 @@ class Cart extends React.Component {
     return (
       <div className="cart">
         <div className="cart-items">
-          <h1>Your Items</h1>
+          <h1>Your Items ({this.props.cart.length})</h1>
           {
             //would eventually be this.props.cart.map
             this.props.cart.length === 0
@@ -80,12 +80,15 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    getCart: (cartId) => {
-      dispatch(fetchAllCartProducts(cartId));
+    getCart: () => {
+      dispatch(fetchAllCartProducts());
     },
-    checkoutCart: (userId) => {
-      dispatch(checkout(userId));
+    checkoutCart: () => {
+      dispatch(checkout());
     },
+    clearCart: () => {
+      dispatch(clearCart())
+    }
   };
 };
 

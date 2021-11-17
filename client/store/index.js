@@ -7,6 +7,7 @@ import users from "./users";
 import cartsReducer from "./cart";
 import productsReducer from "./products";
 import singleProductReducer from "./singleProduct";
+import categoriesReducer from './category'
 
 //Muwhahahaah here is our combined reducers! The original reducer was confusing to read so I've sort of reformatted it into something more readable. We can switch it back though if its better. Its commented out here below.
 
@@ -17,6 +18,7 @@ const reducer = combineReducers({
   products: productsReducer,
   singleProduct: singleProductReducer,
   cart: cartsReducer,
+  categories: categoriesReducer
 });
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))
