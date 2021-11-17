@@ -2,11 +2,19 @@ import axios from "axios";
 
 //Action Types
 const GET_SINGLE_PRODUCT = "GET_SINGLE_PRODUCT"
+const SET_SINGLE_PRODUCT = "SET_SINGLE_PRODUCT"
 
 //Action Creators
 export const fetchProduct = (product) => {
   return {
     type: GET_SINGLE_PRODUCT,
+    product
+  }
+}
+
+export const setSingleProduct = (product) => {
+  return {
+    type: SET_SINGLE_PRODUCT,
     product
   }
 }
@@ -24,11 +32,15 @@ export const fetchSingleProduct = (id) => {
   }
 }
 
+
+
 //Reducer
-const initialState = []
+const initialState = {}
 
 export default function singleProductReducer(state = initialState, action) {
   switch (action.type) {
+    case SET_SINGLE_PRODUCT:
+        return action.product;
     case GET_SINGLE_PRODUCT:
       return action.product
     default:
