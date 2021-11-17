@@ -1,6 +1,8 @@
 import axios from "axios";
-const TOKEN = "token";
-const isUser = window.localStorage.getItem(TOKEN);
+
+// token definition
+const token = window.localStorage.getItem('token');
+const authHeader = { headers: { authorization: token } }
 
 // action types
 const GET_CART_PRODUCTS = "GET_CART_PRODUCTS";
@@ -57,12 +59,11 @@ export const _addToCart = (product) => {
 };
 
 // thunks
-export const fetchAllCartProducts = (cartId) => {
+export const fetchAllCartProducts = () => {
   return async (dispatch) => {
     try {
-      // const token = window.localStorage.getItem(TOKEN);
       // if (token) {
-      const { data } = await axios.get(`/api/cart/${cartId}`);
+      const { data } = await axios.get(`/api/cart/`, authHeader);
       dispatch(fetchCartProducts(data));
       // } else {
       //   let guestCart = localStorage.getItem("cartObj");
@@ -75,13 +76,13 @@ export const fetchAllCartProducts = (cartId) => {
   };
 };
 
-export const changeQuantity = ({ userId, quantity, productId }) => {
+export const changeQuantity = ({ quantity, productId }) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.put(`/api/cart/user/${userId}/quantity`, {
+      const { data } = await axios.put(`/api/cart/quantity`, {
         quantity,
         productId,
-      });
+      }, authHeader);
       dispatch(_changeQuantity(data));
     } catch (error) {
       console.log("error in changeQuantity", error);
@@ -89,11 +90,11 @@ export const changeQuantity = ({ userId, quantity, productId }) => {
   };
 };
 
-export const removeItem = ({ userId, productId }) => {
+export const removeItem = ({ productId }) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.delete(
-        `/api/cart/user/${userId}/${productId}`
+        `/api/cart/`, {headers: { authorization: token }, data: { productId }}
       );
       dispatch(remFromCart(data));
     } catch (error) {
@@ -102,10 +103,10 @@ export const removeItem = ({ userId, productId }) => {
   };
 };
 
-export const checkout = (userId) => {
+export const checkout = () => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.put(`/api/cart/user/${userId}/checkout`);
+      const { data } = await axios.put(`/api/cart/checkout`, {}, authHeader);
       dispatch(_checkout(data));
     } catch (error) {
       console.log("error in checkout thunk", error);
@@ -113,18 +114,17 @@ export const checkout = (userId) => {
   };
 };
 
-export const addToCart = (cartId, productId, quantity) => {
+
+export const addToCart = (productId, quantity) => {
   return async (dispatch, getState) => {
-    try {
-      const token = window.localStorage.getItem(TOKEN);
-      if (token) {
-        const { data } = await axios.post(`/api/cart`, {
-          cartId,
-          productId,
-          quantity,
-        });
+    if (token) {
+      try {
+        const { data } = await axios.post(`/api/cart`, {productId,quantity}, authHeader);
         dispatch(_addToCart(data));
-      } else {
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
         let cartObj = JSON.parse(localStorage.getItem("cartObj"));
         if (cartObj === null) {
           cartObj = [];
@@ -157,9 +157,7 @@ export const addToCart = (cartId, productId, quantity) => {
         dispatch(_addToCart(cartObj));
         //test
       }
-    } catch (error) {
-      console.log(error);
-    }
+    
   };
 };
 
@@ -168,13 +166,13 @@ const initialState = [];
 export default function cartsReducer(state = initialState, action) {
   switch (action.type) {
     case GET_CART_PRODUCTS:
-      if (!isUser) {
+      if (!token) {
         return JSON.parse(localStorage.cartObj);
       } else {
         return action.products;
       }
     case CHANGE_QUANTITY:
-      if (!isUser) {
+      if (!token) {
         return JSON.parse(localStorage.cartObj.quantity); ///NEEDS WORK
       } else {
         return state.map((product) => {
@@ -185,7 +183,7 @@ export default function cartsReducer(state = initialState, action) {
       }
 
     case ADD_TO_CART:
-      if (!isUser) {
+      if (!token) {
         return JSON.parse(localStorage.cartObj);
       } else {
         action.product.cart_product = action.product.cart_product[0];
