@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { createProduct, fetchAllProducts } from '../../../store/products';
-import { fetchSingleProduct } from '../../../store/singleProduct';
+import { fetchSingleProduct, setSingleProduct } from '../../../store/singleProduct';
 import { Link } from 'react-router-dom';
 
 export class AdminProductEditSingle extends React.Component {
@@ -23,7 +23,8 @@ export class AdminProductEditSingle extends React.Component {
     }
 
     componentWillUnmount() {
-        // this.props.clearSingleProduct(); <<-- NOTE TO/FROM LAWRENCE: MAKE THIS THUNK! Clear singleProduct store data. Also put this in single product page veiw?
+        this.props.clearSingleProduct(); 
+        // <<-- NOTE TO/FROM LAWRENCE: MAKE THIS THUNK! Clear singleProduct store data. Also put this in single product page veiw?
     }
 
     componentDidUpdate(prevProps) {
@@ -93,7 +94,8 @@ const mapStateToProps = ({ singleProduct } ) => ({
 const mapDispatchToProps = (dispatch) => ({
     createProduct: (product) => dispatch(createProduct(product)),
     fetchAllProducts: () => dispatch(fetchAllProducts()),
-    getSingleProduct: (productId) => dispatch(fetchSingleProduct(productId))
+    getSingleProduct: (productId) => dispatch(fetchSingleProduct(productId)),
+    clearSingleProduct: () => dispatch(setSingleProduct({}))
   });
 
   export default connect(mapStateToProps, mapDispatchToProps)(AdminProductEditSingle);
