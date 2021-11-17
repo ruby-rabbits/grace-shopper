@@ -26,7 +26,7 @@ export class SingleProduct extends React.Component {
   onClickAddCart = () => {
     const toastEmitter = {
       position: 'top-right',
-      autoClose: 5000,
+      autoClose: 1500,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -90,7 +90,7 @@ export class SingleProduct extends React.Component {
             >
               Add To Cart
             </button>
-            <ToastContainer />
+            <ToastContainer autoClose={1500} />
             {/* This is a link back to the home page (All Products) */}
             <Link to="/">
               <h3>Back to All Products</h3>

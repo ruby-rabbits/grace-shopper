@@ -58,10 +58,10 @@ export const _addToCart = (product) => {
 };
 
 // thunks
-export const fetchAllCartProducts = (userId) => {
+export const fetchAllCartProducts = (cartId) => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get(`/api/cart/user/${userId}`);
+      const { data } = await axios.get(`/api/cart/${cartId}`);
       dispatch(fetchCartProducts(data));
     } catch (error) {
       console.log(error);
@@ -86,7 +86,6 @@ export const changeQuantity = ({ userId, quantity, productId }) => {
 export const removeItem = ({ userId, productId }) => {
   return async (dispatch) => {
     try {
-      console.log(userId, productId);
       const { data } = await axios.delete(
         `/api/cart/user/${userId}/${productId}`
       );

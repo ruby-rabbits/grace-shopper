@@ -6,17 +6,18 @@ const {
 module.exports = router;
 
 //get products from users cart, filter on front end allows us to use this route to show products in cart and products user has previously bought
-router.get('/user/:userId', async (req, res, next) => {
+router.get('/:cartId', async (req, res, next) => {
   try {
-    const cartIdForUser = await User.findByPk(Number(req.params.userId));
-    const thisCartId = await cartIdForUser.cartId;
     // console.log("THIS IS WHAT WE LOOKING FOR: ", thisCartId);
-    const cart = await Cart.findByPk(thisCartId, {
+    const cartId = Number(req.params.cartId);
+    const cart = await Cart.findByPk(cartId, {
       include: {
         model: Product,
       },
     });
-    res.json(cart.products);
+    const currentCart = cart.products.filter(item => !item.cart_product.purchased)
+    console.log(currentCart)
+    res.json(currentCart);
   } catch (err) {
     next(err);
   }
