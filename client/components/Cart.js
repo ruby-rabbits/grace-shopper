@@ -37,7 +37,7 @@ class Cart extends React.Component {
     return (
       <div className="cart">
         <div className="cart-items">
-          <h1>Your Items</h1>
+          <h1>Your Items ({this.props.cart.length})</h1>
           {
             //would eventually be this.props.cart.map
             this.props.cart.length === 0
