@@ -10,17 +10,23 @@ class MiniCart extends React.Component {
   render() {
     return (
       <span id="mini-cart">
-        <Link to="/cart"> <h3> Your Cart ({this.props.cart.length}) </h3></Link>
+        <Link to="/cart">
+          {' '}
+          <h3> Your Cart ({this.props.cart.length}) </h3>
+        </Link>
         {this.props.cart.map((item) => (
-          <Link to={`/products/${item.id}`} key={item.id}>
-             <div id="mini-cart-item">
-            <img src={item.picture}></img>
-            <p>
-              {item.productName} x <b>{item.cart_product.quantity}</b>
-            </p>
-          </div>
+          <Link
+            to={`/products/${item.id}`}
+            key={item.id}
+            onClick={this.props.changeProduct ? () => this.props.changeProduct(item.id) : () => {}}
+          >
+            <div id="mini-cart-item">
+              <img src={item.picture}></img>
+              <p>
+                {item.productName} x <b>{item.cart_product.quantity}</b>
+              </p>
+            </div>
           </Link>
-
         ))}
       </span>
     );
