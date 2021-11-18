@@ -11,6 +11,11 @@ export class AdminUsersList extends React.Component {
         await this.props.fetchAllUsers();
       }
 
+      componentDidUpdate(prevProps) {
+        if(!prevProps.users.length){
+          this.props.fetchAllUsers()
+        }
+      }
       componentWillUnmount() {
         this.props.clearAllUsers();
       }
@@ -26,7 +31,7 @@ export class AdminUsersList extends React.Component {
             <button onClick={() => alert('no longer admin - dummy fuinction') }>Demote from Admin</button>
             ) : (
               <button onClick={() => alert('make admin - dummy function') }>Make Admin</button>
-            )} 
+            )}
             </li>) ) }
           </ul>
         </div>

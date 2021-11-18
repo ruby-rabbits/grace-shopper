@@ -5,7 +5,7 @@ import { logout } from '../store';
 import { clearCart } from '../store/cart';
 import { getCategories } from '../store/category';
 
-const Navbar = ({ handleClick, isLoggedIn, isAdmin, getCategories, categories }) => {
+const Navbar = ({ handleClick, isLoggedIn, isAdmin, getCategories, categories}) => {
 
   useEffect(() => {
     getCategories();
@@ -35,7 +35,7 @@ const Navbar = ({ handleClick, isLoggedIn, isAdmin, getCategories, categories })
                   Logout
                 </a>
                 <Link id="cartLink" to="/cart">
-                  Cart
+                  Cart(LoggedIn)
                 </Link>
               </span>
             ) : (
@@ -43,7 +43,7 @@ const Navbar = ({ handleClick, isLoggedIn, isAdmin, getCategories, categories })
                 <Link to="/login">Login</Link>
                 <Link to="/signup">Sign Up</Link>
                 <Link id="cartLink" to="/cart">
-                  Cart
+                  Cart (guest)
                 </Link>
               </span>
             )}
@@ -61,7 +61,7 @@ const mapState = (state) => {
   return {
     isLoggedIn: !!state.auth.id,
     isAdmin: !!state.auth.isAdmin,
-    categories: state.categories
+    categories: state.categories,
   };
 };
 
