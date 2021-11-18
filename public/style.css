@@ -52,7 +52,7 @@ div#auth {
   margin: auto 0;
 }
 
-form#auth {
+form#auth, #add-product-form {
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -64,7 +64,7 @@ form#auth h1 {
   margin: auto;
 }
 
-form#auth input {
+form#auth input, #add-product-form input {
   margin: 0.5rem 0;
   width: 100%;
   padding: 0.3rem 0.5rem;
@@ -75,11 +75,16 @@ form#auth input {
   border: none;
 }
 
+#add-product-form input{
+  margin: 1rem 0
+}
+
+
 form div {
   margin: 1em 0;
 }
 
-form#auth button[type='submit'] {
+form#auth button[type='submit'] , #add-product-form button{
   background-color: #104f55;
   color: white;
   border: 2px solid white;
@@ -89,14 +94,28 @@ form#auth button[type='submit'] {
   width: 100%;
 }
 
-form#auth button[type='submit']:hover {
+#add-product-form button {
+  margin-top: 1rem;
+}
+
+
+form#auth button[type='submit']:hover:enabled, #add-product-form button:hover {
   border-color: #104f55;
   background-color: white;
   color: #104f55;
 }
 
+form#auth button[type='submit']:disabled {
+  background: #dddddd;
+}
+
+span.required{
+  color: red;
+}
+
+
 .all-product-container {
-  width: 85%;
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   gap: 1.5rem 3rem;

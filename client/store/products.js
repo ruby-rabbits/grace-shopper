@@ -62,12 +62,14 @@ export const fetchAllProducts = () => {
 }
 
 
-export const createProduct = (product) => {
+export const createProduct = (product,history) => {
     return async (dispatch) => {
         try {
             const { productName, picture, description, price, categoryId } = product;
             const {data: created } = await axios.post('/api/products', { productName, picture, description, price, categoryId }, authHeader)
             dispatch(_createProduct(created))
+            history.push(`/products/${created.id}`)
+
         }
         catch(error) {
             console.log(error);
@@ -75,14 +77,14 @@ export const createProduct = (product) => {
     }
 }
 
-export const updateProduct = (product) => {
+export const updateProduct = (product,history) => {
     return async (dispatch) => {
         const { id, productName, picture, description, price, categoryId } = product;
         // alert(id);
         const updatedProductInfo = { id, productName, picture, description, price, categoryId };
         const { data: updated } = await axios.put(`/api/products/`, updatedProductInfo , authHeader);
         dispatch(_updateProduct(updated));
-        // history.push(`/projects/${project.id}`);
+        history.push(`/products/${updated.id}`);
     }
 }
 // reducer

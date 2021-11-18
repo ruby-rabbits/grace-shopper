@@ -58,6 +58,7 @@ export class SingleProduct extends React.Component {
         <div className="sp-description">
           <h2 className="single-product">{product.productName}</h2>
 
+
           <section
             style={{
               width: 'auto',
@@ -67,7 +68,6 @@ export class SingleProduct extends React.Component {
               alignItems: 'center',
             }}
           >
-            <p className="single-product">${product.price}</p>
             <section>
               <i
                 className="bi bi-dash-circle quantity"

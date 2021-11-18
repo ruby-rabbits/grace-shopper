@@ -23,7 +23,7 @@ export class AdminProductEditSingle extends React.Component {
     }
 
     componentWillUnmount() {
-        this.props.clearSingleProduct(); 
+        this.props.clearSingleProduct();
         this.setState({
             productName: '',
             picture: '',
@@ -56,7 +56,7 @@ export class AdminProductEditSingle extends React.Component {
     handleSubmit(evt) {
         evt.preventDefault();
         this.props.updateProduct({ ...this.state });
-        
+
       }
 
     render() {
@@ -69,12 +69,12 @@ export class AdminProductEditSingle extends React.Component {
 
               <label htmlFor='picture'>Product Image URL:</label>
               <input name='picture' onChange={handleChange} value={picture} />
-              
+
               <label htmlFor='description'>Product Description:</label>
               <input name='description' onChange={handleChange} value={description} />
 
               <label htmlFor='price'>Product Price:</label>
-              $<input name='price' onChange={handleChange} value={price} />
+              <input name='price' onChange={handleChange} value={price} />
 
               <label htmlFor='categoryId'>Category:</label>
               <select name='categoryId' onChange={handleChange} value={categoryId}>
@@ -95,8 +95,8 @@ const mapStateToProps = (state) => ({
     categories: state.categories || []
 });
 
-const mapDispatchToProps = (dispatch) => ({
-    updateProduct: (product) => dispatch(updateProduct(product)),
+const mapDispatchToProps = (dispatch, {history}) => ({
+    updateProduct: (product) => dispatch(updateProduct(product,history)),
     fetchAllProducts: () => dispatch(fetchAllProducts()),
     getSingleProduct: (productId) => dispatch(fetchSingleProduct(productId)),
     clearSingleProduct: () => dispatch(setSingleProduct({}))
