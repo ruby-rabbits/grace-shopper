@@ -99,6 +99,10 @@ form#auth button[type='submit']:disabled {
   background: #dddddd;
 }
 
+span.required{
+  color: red;
+}
+
 
 .all-product-container {
   width: 85%;
