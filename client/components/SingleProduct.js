@@ -34,11 +34,12 @@ export class SingleProduct extends React.Component {
       progress: undefined,
     };
     try {
-      this.props.addToCart(
-        this.props.product.id,
-        this.state.quantity
-      );
-      const successAlert = () => toast.success(`${this.state.quantity} ticket(s) for ${this.props.product.productName} added to cart!`, toastEmitter);
+      this.props.addToCart(this.props.product.id, this.state.quantity);
+      const successAlert = () =>
+        toast.success(
+          `${this.state.quantity} ticket(s) for ${this.props.product.productName} added to cart!`,
+          toastEmitter
+        );
       successAlert();
     } catch (e) {
       const errorAlert = () => toast.error(`error occurred`, toastEmitter);
@@ -67,6 +68,9 @@ export class SingleProduct extends React.Component {
               alignItems: 'center',
             }}
           >
+            <p className="single-product">
+              {product.date ? product.date.slice(0, 10) : null}
+            </p>
             <p className="single-product">${product.price}</p>
             <section>
               <i
@@ -105,7 +109,7 @@ const mapState = (state) => {
   return {
     product: state.singleProduct,
     userId: state.auth.id,
-    cartId: state.auth.cartId
+    cartId: state.auth.cartId,
   };
 };
 

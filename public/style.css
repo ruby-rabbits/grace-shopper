@@ -104,6 +104,8 @@ span.required{
 }
 
 
+/* All Products */
+
 .all-product-container {
   width: 85%;
   display: flex;
@@ -127,6 +129,8 @@ span.required{
   justify-content: center;
 }
 
+/* Single Product */
+
 .single-product-container {
   display: flex;
   justify-content: space-around;
@@ -136,7 +140,7 @@ span.required{
   border-radius: 10px;
   padding: 2rem;
   width: 80%;
-  margin: auto;
+  /* margin: auto; */
 }
 
 .single-product img {
@@ -149,8 +153,9 @@ span.required{
   flex-direction: column;
 }
 
-.single-product h2 {
+h2.single-product  {
   size: 20px;
+  text-align: center;
 }
 
 .product-card a {

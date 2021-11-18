@@ -81,7 +81,7 @@ async function seed() {
   const movie_products = await Promise.all(
     moviesData.map((movie) => {
       let price = (Math.random() * 30).toFixed(2);
-      let date = randomDate(new Date(), new Date(2022, 12, 24));
+      let date = randomDate(new Date(), new Date(2021, 12, 24));
       Product.create({
         price,
         date,
