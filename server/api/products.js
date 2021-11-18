@@ -12,7 +12,6 @@ module.exports = router;
 // GET /api/products  ==> all products
 router.get("/", async (req, res, next) => {
   try {
-    console.log(req.body.start)
     const products = await Product.findAll({order: [['id', 'ASC']], include: Category});
     res.json(products);
   } catch (err) {
@@ -20,19 +19,6 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-// router.put("/", async (req,res,next) => {
-//   try {
-//     const productToAdd = await Product.findByPk(req.body.productId)
-//     const cart = await Cart.findByPk(req.body.cartId)
-//     const addProduct = await cart.addProduct(productToAdd)
-//     console.log(addProduct)
-//     res.json(addProduct)
-//   }
-//   catch(error){
-//     console.log(error)
-//     next(error)
-//   }
-// })
 // GET /api/products/:id == > single product with id
 router.get("/:id", async (req, res, next) => {
   try {
@@ -53,11 +39,13 @@ router.post("/", requireToken, isAdmin, async (req, res, next) => {
     const { productName, picture, description, price, categoryId } = req.body;
     const newProduct = await Product.create({ productName: productName, picture: picture, description: description, price: price, categoryId: Number(categoryId), date: new Date() });
     res.json(newProduct);
-  } catch (err) {
-    if (err.name === "SequelizeValidationError") {
-      res.status(401).send("Something is wrong with this form");
+  } catch (error) {
+    if (error.name === "SequelizeValidationError") {
+      res.status(400).send("Sequelize");
+    } else if (error.name === "SequelizeUniqueConstraintError") {
+      res.status(401).send("User already exists");
     } else {
-      next(err);
+      next(error);
     }
   }
 });

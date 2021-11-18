@@ -21,7 +21,6 @@ export const AdminPanel = (props) => {
       <h2>Users</h2>
       <ul>
             <li><Link to='/admin/users/view'>View All Users</Link></li>
-            <li><Link to='/admin/users/admin'>Confer Administrative Priveleges</Link></li>
         </ul>
 
 
