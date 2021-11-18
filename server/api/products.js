@@ -12,6 +12,7 @@ module.exports = router;
 // GET /api/products  ==> all products
 router.get("/", async (req, res, next) => {
   try {
+    console.log(req.body.start)
     const products = await Product.findAll({order: [['id', 'ASC']], include: Category});
     res.json(products);
   } catch (err) {
