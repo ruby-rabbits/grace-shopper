@@ -51,7 +51,8 @@ router.post("/", requireToken, isAdmin, async (req, res, next) => {
   try {
     const { productName, picture, description, price, categoryId } = req.body;
     const newProduct = await Product.create({ productName: productName, picture: picture, description: description, price: price, categoryId: Number(categoryId), date: new Date() });
-    res.json(newProduct);
+    const eagerLoaded = await Product.findByPk(newProduct.id, {include: Category})
+    res.json(eagerLoaded);
   } catch (err) {
     if (err.name === "SequelizeValidationError") {
       res.status(401).send("Something is wrong with this form");
@@ -64,7 +65,7 @@ router.post("/", requireToken, isAdmin, async (req, res, next) => {
 // PUT /api/products/ ==> edit product with id (id passed in through req.body)
 router.put("/", requireToken, isAdmin, async (req, res, next) => {
   try {
-    const productToUpdate = await Product.findByPk(req.body.id);
+    const productToUpdate = await Product.findByPk(req.body.id, {include: Category});
     const updatedProduct = await productToUpdate.update(req.body);
     res.json(updatedProduct);
   } catch (err) {

@@ -9,9 +9,7 @@ class CategoryPage extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.products.length === 0) {
-      this.props.fetchAllProducts();
-    }
+    this.props.fetchAllProducts();
   }
 
   // needs to show filtered set of products
