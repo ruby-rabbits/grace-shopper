@@ -89,11 +89,16 @@ form#auth button[type='submit'] {
   width: 100%;
 }
 
-form#auth button[type='submit']:hover {
+form#auth button[type='submit']:hover:enabled {
   border-color: #104f55;
   background-color: white;
   color: #104f55;
 }
+
+form#auth button[type='submit']:disabled {
+  background: #dddddd;
+}
+
 
 .all-product-container {
   width: 85%;
