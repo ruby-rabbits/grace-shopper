@@ -22,6 +22,7 @@ import AdminUsersList from "./components/admin/users/AdminUsersList";
 import AdminUserViewSingle from "./components/admin/users/AdminUserViewSingle";
 import AdminUsersAdmin from "./components/admin/users/AdminUsersAdmin";
 import CategoryPage from "./components/CategoryPage";
+import { fetchAllCartProducts } from "./store/cart";
 
 /**
  * COMPONENT
@@ -110,6 +111,7 @@ const mapDispatch = (dispatch) => {
   return {
     loadInitialData() {
       dispatch(me());
+      dispatch(fetchAllCartProducts())
     },
   };
 };

@@ -11,7 +11,7 @@ class Cart extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.cartId) {
+    if (this.props.cart.length === 0) {
       this.props.getCart();
     }
   }
