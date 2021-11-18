@@ -66,8 +66,7 @@ export class AdminProductAdd extends React.Component {
         <button type="submit">Add Product</button>
         {error && error.response && <div> {error.response.data}</div>}
 
-        <button type="submit">Add Product</button>
-        {error && error.response && <div> {error.response.data}</div>}
+
       </form>
     );
   }
@@ -78,8 +77,8 @@ const mapStateToProps = (state) => ({
   categories: state.categories || [],
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  createProduct: (product) => dispatch(createProduct(product)),
+const mapDispatchToProps = (dispatch, {history}) => ({
+  createProduct: (product) => dispatch(createProduct(product,history)),
   fetchAllProducts: () => dispatch(fetchAllProducts()),
   getCategories: () => dispatch(getCategories()),
 });

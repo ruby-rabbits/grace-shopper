@@ -95,8 +95,8 @@ const mapStateToProps = (state) => ({
     categories: state.categories || []
 });
 
-const mapDispatchToProps = (dispatch) => ({
-    updateProduct: (product) => dispatch(updateProduct(product)),
+const mapDispatchToProps = (dispatch, {history}) => ({
+    updateProduct: (product) => dispatch(updateProduct(product,history)),
     fetchAllProducts: () => dispatch(fetchAllProducts()),
     getSingleProduct: (productId) => dispatch(fetchSingleProduct(productId)),
     clearSingleProduct: () => dispatch(setSingleProduct({}))
