@@ -64,9 +64,9 @@ export const fetchAllProducts = () => {
 
 export const createProduct = (product) => {
     return async (dispatch) => {
-        try { 
-            const token = window.localStorage.getItem('token');
-            const {data: created } = await axios.post('/api/products', product, authHeader)
+        try {
+            const { productName, picture, description, price, categoryId } = product;
+            const {data: created } = await axios.post('/api/products', { productName, picture, description, price, categoryId }, authHeader)
             dispatch(_createProduct(created))
         }
         catch(error) {

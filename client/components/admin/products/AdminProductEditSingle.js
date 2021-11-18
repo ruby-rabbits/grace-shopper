@@ -78,8 +78,9 @@ export class AdminProductEditSingle extends React.Component {
 
               <label htmlFor='categoryId'>Category:</label>
               <select name='categoryId' onChange={handleChange} value={categoryId}>
-                  <option value='1'>Test Option</option>
-                  <option value='2'>Test Option</option>
+                {this.props.categories.map(category => (
+                <option key={category.id} value={category.id}>{category.categoryDisplayName}</option>
+                ))}
               </select>
               <button type='submit'>Edit Product</button>
             </form>
@@ -89,8 +90,9 @@ export class AdminProductEditSingle extends React.Component {
     }
 }
 
-const mapStateToProps = ({ singleProduct } ) => ({
-    singleProduct
+const mapStateToProps = (state) => ({
+    singleProduct: state.singleProduct,
+    categories: state.categories || []
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -19,19 +19,6 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-// router.put("/", async (req,res,next) => {
-//   try {
-//     const productToAdd = await Product.findByPk(req.body.productId)
-//     const cart = await Cart.findByPk(req.body.cartId)
-//     const addProduct = await cart.addProduct(productToAdd)
-//     console.log(addProduct)
-//     res.json(addProduct)
-//   }
-//   catch(error){
-//     console.log(error)
-//     next(error)
-//   }
-// })
 // GET /api/products/:id == > single product with id
 router.get("/:id", async (req, res, next) => {
   try {
@@ -51,13 +38,14 @@ router.post("/", requireToken, isAdmin, async (req, res, next) => {
   try {
     const { productName, picture, description, price, categoryId } = req.body;
     const newProduct = await Product.create({ productName: productName, picture: picture, description: description, price: price, categoryId: Number(categoryId), date: new Date() });
+
     const eagerLoaded = await Product.findByPk(newProduct.id, {include: Category})
     res.json(eagerLoaded);
   } catch (err) {
     if (err.name === "SequelizeValidationError") {
       res.status(401).send("Something is wrong with this form");
     } else {
-      next(err);
+      next(error);
     }
   }
 });

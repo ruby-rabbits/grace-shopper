@@ -38,10 +38,8 @@ class Routes extends Component {
       <div className="routes">
         {isLoggedIn ? (
           <Switch>
-
-
             <Route exact path="/" component={LandingPage} />
-
+            <Route exact path="/page/:pageNum" component={LandingPage} />
             <Route path="/myAccount" component={MyAccount} />
             {/* <Route exact path="/shows/:category" component={Signup} /> */}
             <Route exact path="/shows" component={AllProducts} />
@@ -53,6 +51,7 @@ class Routes extends Component {
         ) : (
           <Switch>
             <Route exact path="/" exact component={LandingPage} />
+            <Route exact path="/page/:pageNum" component={LandingPage} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={Signup} />
             <Route path="/cart" component={Cart} />

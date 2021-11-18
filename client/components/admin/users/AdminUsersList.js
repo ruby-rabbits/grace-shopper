@@ -7,8 +7,8 @@ export class AdminUsersList extends React.Component {
     constructor() {
         super();
     }
-      componentDidMount() {
-        this.props.fetchAllUsers();
+      async componentDidMount() {
+        await this.props.fetchAllUsers();
       }
 
       componentWillUnmount() {

@@ -4,13 +4,18 @@ import { Link } from 'react-router-dom';
 import { fetchAllProducts } from '../store/products';
 import AllProducts from './AllProducts';
 
+
 export class LandingPage extends React.Component {
+  constructor(props) {
+    super(props);
+  }
   async componentDidMount() {
     await this.props.fetchAllProducts();
   }
   render() {
     const products = this.props.products;
     const isLoggedIn = this.props.isLoggedIn;
+    const currentPage = this.props.match.params.pageNum || 1;
     // get all product types, map out all product types and display it on landing page
     return (
       <div>
@@ -21,7 +26,7 @@ export class LandingPage extends React.Component {
         )}
         <h3>What do you want to see?</h3>
 
-        { (products.length === 0) ? 'Loading' : <AllProducts />}
+        { (products.length === 0) ? 'Loading' : <AllProducts CurrentPage={currentPage} />}
       </div>
     );
   }
