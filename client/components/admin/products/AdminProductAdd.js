@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { getCategories } from '../../../store/category';
 import { createProduct, fetchAllProducts } from '../../../store/products';
 
 export class AdminProductAdd extends React.Component {
@@ -54,14 +55,17 @@ export class AdminProductAdd extends React.Component {
         <label htmlFor="description">Product Description:</label>
         <input name="description" onChange={handleChange} value={description} />
 
-        <label htmlFor="price">Product Price:</label>
-        <input name="price" onChange={handleChange} value={price} />
-
         <label htmlFor="categoryId">Category:</label>
         <select name="categoryId" onChange={handleChange} value={categoryId}>
-          <option value="1">Test Option</option>
-          <option value="2">Test Option</option>
+          {this.props.categories.map((category) => (
+            <option key={category.id} value={category.id}>
+              {category.categoryDisplayName}
+            </option>
+          ))}
         </select>
+        <button type="submit">Add Product</button>
+        {error && error.response && <div> {error.response.data}</div>}
+
         <button type="submit">Add Product</button>
         {error && error.response && <div> {error.response.data}</div>}
       </form>
@@ -71,11 +75,13 @@ export class AdminProductAdd extends React.Component {
 
 const mapStateToProps = (state) => ({
   error: state.products.error,
+  categories: state.categories || [],
 });
 
 const mapDispatchToProps = (dispatch) => ({
   createProduct: (product) => dispatch(createProduct(product)),
   fetchAllProducts: () => dispatch(fetchAllProducts()),
+  getCategories: () => dispatch(getCategories()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdminProductAdd);
