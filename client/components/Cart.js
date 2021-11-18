@@ -11,9 +11,7 @@ class Cart extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.cartId) {
       this.props.getCart();
-    }
   }
 
   componentDidUpdate(prevProps) {
@@ -34,6 +32,7 @@ class Cart extends React.Component {
   }
 
   render() {
+    // console.log(window.localStorage)
     return (
       <div className="cart">
         <div className="cart-items">

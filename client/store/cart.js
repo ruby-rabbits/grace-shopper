@@ -62,14 +62,14 @@ export const _addToCart = (product) => {
 export const fetchAllCartProducts = () => {
   return async (dispatch) => {
     try {
-      // if (token) {
+      if (token) {
       const { data } = await axios.get(`/api/cart/`, authHeader);
       dispatch(fetchCartProducts(data));
-      // } else {
-      //   let guestCart = localStorage.getItem("cartObj");
-      //   guestCart = JSON.stringify(guestCart);
-      //   dispatch(fetchCartProducts(guestCart));
-      // }
+      } else {
+        let guestCart = localStorage.getItem("cartObj");
+        guestCart = JSON.parse(guestCart);
+        dispatch(fetchCartProducts(guestCart));
+      }
     } catch (error) {
       console.log(error);
     }
@@ -79,11 +79,24 @@ export const fetchAllCartProducts = () => {
 export const changeQuantity = ({ quantity, productId }) => {
   return async (dispatch) => {
     try {
+      if(token){
       const { data } = await axios.put(`/api/cart/quantity`, {
         quantity,
         productId,
       }, authHeader);
       dispatch(_changeQuantity(data));
+    }
+    else{
+      let guestCart = JSON.parse(localStorage.getItem("cartObj"));
+      let mappedProducts = guestCart.map((item) => {
+        if(item.cart_product.id === productId) {
+          item.cart_product.quantity = quantity
+        }
+        return item
+      })
+      localStorage.setItem('cartObj', JSON.stringify(mappedProducts))
+      dispatch(_changeQuantity(mappedProducts))
+    }
     } catch (error) {
       console.log("error in changeQuantity", error);
     }
@@ -93,10 +106,23 @@ export const changeQuantity = ({ quantity, productId }) => {
 export const removeItem = ({ productId }) => {
   return async (dispatch) => {
     try {
+      if(token){
       const { data } = await axios.delete(
         `/api/cart/`, {headers: { authorization: token }, data: { productId }}
       );
       dispatch(remFromCart(data));
+      }
+      else{
+        let guestCart = JSON.parse(localStorage.getItem("cartObj"));
+        let removeProduct = guestCart.filter((item) => {
+          if(item.id !== productId){
+            return item
+          }
+        })
+        localStorage.setItem("cartObj", JSON.stringify(removeProduct))
+        dispatch(remFromCart(removeProduct))
+      }
+
     } catch (error) {
       console.log("error in removeItem", error);
     }
@@ -157,7 +183,7 @@ export const addToCart = (productId, quantity) => {
         dispatch(_addToCart(cartObj));
         //test
       }
-    
+
   };
 };
 
@@ -173,7 +199,7 @@ export default function cartsReducer(state = initialState, action) {
       }
     case CHANGE_QUANTITY:
       if (!token) {
-        return JSON.parse(localStorage.cartObj.quantity); ///NEEDS WORK
+        return action.updatedProduct; ///NEEDS WORK
       } else {
         return state.map((product) => {
           if (product.id === action.updatedProduct.productId)
@@ -194,8 +220,12 @@ export default function cartsReducer(state = initialState, action) {
       }
 
     case REMOVE_FROM_CART:
-      return state.filter((product) => product.id !== action.product.productId);
-
+      if(!token){
+        return action.product
+      }
+      else{
+        return state.filter((product) => product.id !== action.product.productId);
+      }
     case CHECKOUT:
       return [];
 
